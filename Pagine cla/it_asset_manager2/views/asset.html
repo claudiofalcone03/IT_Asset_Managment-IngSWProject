@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestione Asset</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <div class="sidebar">
+        <h3>Gestione IT</h3>
+        <a href="/views/asset.html">Asset</a>
+        <a href="/views/dipendenti.html">Dipendenti</a>
+        <a href="/views/accessori.html">Accessori</a>
+        <a href="/views/sedi.html">Sedi</a>
+        <a href="/views/licenze.html">Licenze</a>
+    </div>
+    <div class="content">
+        <h1>Gestione Asset</h1>
+        <button onclick="aggiungiAsset()">Aggiungi Asset</button>
+        <table>
+            <thead>
+                <tr>
+                    <th>Seriale</th>
+                    <th>Nome</th>
+                    <th>Categoria</th>
+                    <th>Status</th>
+                    <th>Azioni</th>
+                </tr>
+            </thead>
+            <tbody id="asset-table">
+                <!-- Dati dinamici -->
+            </tbody>
+        </table>
+    </div>
+    <script src="/js/script.js"></script>
+</body>
+</html>
