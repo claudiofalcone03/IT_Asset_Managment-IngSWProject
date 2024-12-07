@@ -24,10 +24,11 @@ DROP TABLE IF EXISTS `accessori`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `accessori` (
   `id_accessori` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
-  `seriale` varchar(255) DEFAULT NULL,
-  `categoria` varchar(255) DEFAULT NULL,
-  `modello` varchar(255) DEFAULT NULL,
+  `nome_accessori` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `seriale_accessori` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `categoria_accessori` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `modello_accessori` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `costo_accessori` float NOT NULL,
   PRIMARY KEY (`id_accessori`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -38,7 +39,7 @@ CREATE TABLE `accessori` (
 
 LOCK TABLES `accessori` WRITE;
 /*!40000 ALTER TABLE `accessori` DISABLE KEYS */;
-INSERT INTO `accessori` VALUES (1,'ipad','ABC123','tablet','iPad Pro 12.9'),(2,'computer','XYZ709','laptop','Dell XPS 13'),(3,'Smartphone','DEF789','Phone','iPhone 14'),(4,'Monitor','GHI012','Display','Samsung Odyssey G7'),(5,'Mouse','JKL345','Peripherals','Logitech MX Master 3'),(6,'Keyboard','MNO678','Peripherals','Apple Magic Keyboard');
+INSERT INTO `accessori` VALUES (2,'computer','XYZ709','laptop','Dell XPS 13',0),(3,'Smartphone','DEF789','Phone','iPhone 14',0),(4,'Monitor','GHI012','Display','Samsung Odyssey G7',0),(5,'Mouse','JKL345','Peripherals','Logitech MX Master 3',0),(6,'Keyboard','MNO678','Peripherals','Apple Magic Keyboard',0);
 /*!40000 ALTER TABLE `accessori` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -86,7 +87,7 @@ CREATE TABLE `assets` (
   `data_acquisto` date DEFAULT NULL,
   `costo` float DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -95,7 +96,7 @@ CREATE TABLE `assets` (
 
 LOCK TABLES `assets` WRITE;
 /*!40000 ALTER TABLE `assets` DISABLE KEYS */;
-INSERT INTO `assets` VALUES (2,'Ipad','Richiedibili','2024-09-13','Sede filiale','2024-09-06',359),(4,'Laptop','Inattivi','2024-11-15','Sede secondaria','2024-11-02',649),(5,'Tablet','Archiviati','2024-12-11','Sede principale','2024-12-07',429),(6,'Iphone','Attivi','2024-12-28','Sede principale','2024-12-27',1199),(7,'Laptop','Richiedibili','2024-07-12','Sede secondaria','2024-07-11',239.99);
+INSERT INTO `assets` VALUES (2,'Ipad','Richiedibili','2024-09-13','Sede filiale','2024-09-06',359),(4,'Laptop','Inattivi','2024-11-15','Sede secondaria','2024-11-02',649),(5,'Tablet','Archiviati','2024-12-11','Sede principale','2024-12-07',429),(6,'Iphone','Attivi','2024-12-28','Sede principale','2024-12-27',1199),(7,'Laptop','Richiedibili','2024-07-12','Sede secondaria','2024-07-11',239.99),(12,'Telefono','Attivi','2023-12-05','Sede principale','2034-05-12',456);
 /*!40000 ALTER TABLE `assets` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -107,9 +108,9 @@ DROP TABLE IF EXISTS `dipartimento`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `dipartimento` (
-  `id_dip` int NOT NULL AUTO_INCREMENT,
-  `nome` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id_dip`)
+  `id_dipartimento` int NOT NULL AUTO_INCREMENT,
+  `nome_dipartimento` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  PRIMARY KEY (`id_dipartimento`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -137,17 +138,17 @@ CREATE TABLE `dipendenti` (
   `email` varchar(255) DEFAULT NULL,
   `grado` varchar(255) DEFAULT NULL,
   `costo_acquisto` float DEFAULT NULL,
-  `id_accessori` int DEFAULT NULL,
-  `id_sede` int DEFAULT NULL,
-  `id_dip` int DEFAULT NULL,
+  `id_accessori_dip` int DEFAULT NULL,
+  `id_sede_dip` int DEFAULT NULL,
+  `id_dipart_dip` int DEFAULT NULL,
   PRIMARY KEY (`id_dipPK`),
-  KEY `fk_id_accessori` (`id_accessori`),
-  KEY `fk_id_sede` (`id_sede`),
-  KEY `fk_id_dip` (`id_dip`),
-  CONSTRAINT `fk_id_accessori` FOREIGN KEY (`id_accessori`) REFERENCES `accessori` (`id_accessori`) ON DELETE SET NULL ON UPDATE CASCADE,
-  CONSTRAINT `fk_id_dip` FOREIGN KEY (`id_dip`) REFERENCES `dipartimento` (`id_dip`) ON DELETE SET NULL ON UPDATE CASCADE,
-  CONSTRAINT `fk_id_sede` FOREIGN KEY (`id_sede`) REFERENCES `sedi` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  KEY `fk_id_accessori` (`id_accessori_dip`),
+  KEY `fk_id_sede` (`id_sede_dip`),
+  KEY `fk_id_dip` (`id_dipart_dip`),
+  CONSTRAINT `fk_id_accessori` FOREIGN KEY (`id_accessori_dip`) REFERENCES `accessori` (`id_accessori`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `fk_id_dip` FOREIGN KEY (`id_dipart_dip`) REFERENCES `dipartimento` (`id_dipartimento`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `fk_id_sede` FOREIGN KEY (`id_sede_dip`) REFERENCES `sedi` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -156,39 +157,39 @@ CREATE TABLE `dipendenti` (
 
 LOCK TABLES `dipendenti` WRITE;
 /*!40000 ALTER TABLE `dipendenti` DISABLE KEYS */;
-INSERT INTO `dipendenti` VALUES (1,'Anna','Bianchi','anna.bianchi@email.com','Junior',1500,2,1,1),(2,'Lucia','Rossi','lucia.rossi@email.com','Senior',2500,3,6,2),(7,'Sabrina','Amor mi','emailsab','Chef',666,NULL,NULL,NULL),(8,'Claudio ','Falcone','c.falcone1@studenti.poliba.it','Studente',555,NULL,NULL,NULL),(9,'Federico ','Falcone','fedefalkone','fggs',9034,NULL,NULL,NULL);
+INSERT INTO `dipendenti` VALUES (1,'Anna','Bianchi','anna.bianchi@email.com','Junior',1500,2,1,1),(2,'Lucia','Rossi','lucia.rossi@email.com','Senior',2500,3,6,2),(7,'Sabrina','Amor mi','emailsab','Chef',666,NULL,10,NULL),(8,'Claudio ','Falcone','c.falcone1@studenti.poliba.it','Studente',555,NULL,10,NULL),(9,'Federico ','Falcone','fedefalkone','fggs',9034,NULL,9,NULL),(10,'Giusy','Caro','giusycaro','Napoleta',45,NULL,10,NULL),(11,'Luca','Lanzilotti','lucalanz','Cor mi',555,NULL,10,NULL),(12,'Luca','Lanziotti','lucamail','Capocchia',4345,NULL,10,NULL);
 /*!40000 ALTER TABLE `dipendenti` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `lic`
+-- Table structure for table `licenze`
 --
 
-DROP TABLE IF EXISTS `lic`;
+DROP TABLE IF EXISTS `licenze`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `lic` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
-  `prezzo` float DEFAULT NULL,
-  `id_dip` int DEFAULT NULL,
+CREATE TABLE `licenze` (
+  `id_lic` int NOT NULL AUTO_INCREMENT,
+  `nome_lic` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `prezzo_lic` float DEFAULT NULL,
+  `id_dipart_lic` int DEFAULT NULL,
   `productkey` varchar(255) DEFAULT NULL,
-  `data_acquisto` date DEFAULT NULL,
-  `data_scadenza` date DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `fk_id_lic` (`id_dip`),
-  CONSTRAINT `fk_id_lic` FOREIGN KEY (`id_dip`) REFERENCES `dipartimento` (`id_dip`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `data_acquisto_lic` date DEFAULT NULL,
+  `data_scadenza_lic` date DEFAULT NULL,
+  PRIMARY KEY (`id_lic`),
+  KEY `fk_id_lic` (`id_dipart_lic`),
+  CONSTRAINT `fk_id_lic` FOREIGN KEY (`id_dipart_lic`) REFERENCES `dipartimento` (`id_dipartimento`) ON DELETE SET NULL ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `lic`
+-- Dumping data for table `licenze`
 --
 
-LOCK TABLES `lic` WRITE;
-/*!40000 ALTER TABLE `lic` DISABLE KEYS */;
-INSERT INTO `lic` VALUES (1,'GNU General Public License (GPL)',100,1,'GPL12345','2023-01-01','2025-01-01'),(2,'MIT License',50,2,'MIT98765','2023-03-15','2025-03-15'),(3,'Microsoft Office 365',149.99,3,'MSO365ABCD','2024-05-10','2026-05-10'),(4,'Apache License 2.0',49.99,4,'APACHE123','2022-06-30','2024-06-30'),(5,'Adobe Photoshop CC',19.99,1,'CC4000XYZ','2023-11-01','2025-11-01'),(6,'Creative Commons Attribution 4.0',35.99,2,'ADOBEPS456','2024-02-20','2026-02-20');
-/*!40000 ALTER TABLE `lic` ENABLE KEYS */;
+LOCK TABLES `licenze` WRITE;
+/*!40000 ALTER TABLE `licenze` DISABLE KEYS */;
+INSERT INTO `licenze` VALUES (1,'GNU General Public License (GPL)',100,1,'GPL12345','2023-01-01','2025-01-01'),(2,'MIT License',50,2,'MIT98765','2023-03-15','2025-03-15'),(3,'Microsoft Office 365',149.99,3,'MSO365ABCD','2024-05-10','2026-05-10'),(4,'Apache License 2.0',49.99,4,'APACHE123','2022-06-30','2024-06-30'),(5,'Adobe Photoshop CC',19.99,1,'CC4000XYZ','2023-11-01','2025-11-01'),(6,'Creative Commons Attribution 4.0',35.99,2,'ADOBEPS456','2024-02-20','2026-02-20'),(12,'Windows 10 Enterprise',140.75,2,'DEF456-XYZ789-1011','2024-12-01','2026-12-01');
+/*!40000 ALTER TABLE `licenze` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -205,7 +206,7 @@ CREATE TABLE `sedi` (
   `numero_persone` int NOT NULL,
   `posti_disponibili` int NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -214,7 +215,7 @@ CREATE TABLE `sedi` (
 
 LOCK TABLES `sedi` WRITE;
 /*!40000 ALTER TABLE `sedi` DISABLE KEYS */;
-INSERT INTO `sedi` VALUES (1,'Sede centrale','Bari',82,12),(3,'Sede Filiale','Milano',105,15),(6,'Sede Secondaria','Torino',180,25),(9,'Sede Principale','Poliba',300,50),(10,'Sede succursale','Taranto',90,69);
+INSERT INTO `sedi` VALUES (1,'Sede centrale','Bari',82,12),(3,'Sede Filiale','Milano',105,15),(6,'Sede Secondaria','Torino',180,25),(9,'Sede Principale','Poliba',300,50),(10,'Sede pippo','Uniba',45,42);
 /*!40000 ALTER TABLE `sedi` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -252,4 +253,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-12-04 19:33:13
+-- Dump completed on 2024-12-07 16:35:20
