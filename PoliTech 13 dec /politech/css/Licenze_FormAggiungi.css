@@ -1,0 +1,152 @@
+/* Contenitore del form */
+#licenseForm {
+    width: 100%;
+    max-width: 500px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Stile per il titolo */
+#licenseForm h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Stili generali per gli input e il select */
+#licenseForm input,
+#licenseForm select {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Placeholder stilizzato */
+#licenseForm input::placeholder {
+    color: #aaa;
+}
+
+/* Bottone di conferma */
+#licenseForm button {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+#licenseForm button:hover {
+    background-color: #0056b3;
+}
+
+#licenseForm button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+/* Opzioni del select */
+#licenseForm select {
+    padding: 12px;
+}
+
+.custom-form {
+    background-color: #f4f4f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.custom-form input, .custom-form select, .custom-form button {
+    margin-bottom: 10px;
+    padding: 8px;
+    width: 100%;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}
+
+.custom-form button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.custom-form button:hover {
+    background-color: #45a049;
+}
+
+.container {
+    display: flex;
+    height: 100vh;
+}
+
+.content {
+    flex: 1;
+    padding: 20px;
+}
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    right: -300px;  /* Nascondi la sidebar inizialmente */
+    width: 300px;
+    height: 100%;
+    background-color: #f4f4f9;
+    padding: 20px;
+    box-shadow: -4px 0px 10px rgba(0, 0, 0, 0.2);
+    transition: right 0.3s ease-in-out;
+}
+
+.sidebar.active {
+    right: 0;  /* Mostra la sidebar quando è attiva */
+}
+
+.custom-form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.custom-form input,
+.custom-form select,
+.custom-form button {
+    margin-bottom: 10px;
+    padding: 8px;
+    width: 100%;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}
+
+.custom-form button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.custom-form button:hover {
+    background-color: #45a049;
+}
+
+button {
+    margin: 10px 0;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
