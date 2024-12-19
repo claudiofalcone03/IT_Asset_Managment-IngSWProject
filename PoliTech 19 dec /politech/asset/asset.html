@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Asset</title>
     <link rel="stylesheet" href="/politech/css/style1.css">
+    <link rel="stylesheet" href="/politech/css/Licenze_FormAggiungi.css">
     <script src="/politech/script.js" defer></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link rel="icon" href="/favicon.png" type="image/png">
@@ -95,12 +96,6 @@
                 </a>
             </li>
             <li>
-                <a href="/politech/impostazioni/impostazioni.html" style="text-decoration: none; color: inherit;">
-                    <i class="fas fa-cogs"></i>
-                    <span style="font-family: 'Montserrat', sans-serif" class="tooltip">Impostazioni</span>
-                    </a>
-            </li>
-            <li>
                 <a href="/politech/supporto/supporto.html" style="text-decoration: none; color: inherit;">
                     <i class="fas fa-tools"></i> <!-- Nuova icona: attrezzi -->
                     <span style="font-family: 'Montserrat', sans-serif" class="tooltip">Supporto</span>
@@ -111,7 +106,7 @@
 </aside>
 
 <main> 
-    <!-- filtri -->
+    <!-- filtri (non funzionanti)-->
     <div class="filters">
         <label for="statusFilter">Status:</label>
         <select id="statusFilter">
@@ -146,16 +141,16 @@
  
     </div>
     <!-- Tabella -->
-   
    <table id="assetTable">
     <thead>
         <tr>
             <th>ID</th>
             <th>Nome</th>
             <th>Status</th>
-            <th>Data Inserimento</th>
+            <th>Dipendente</th>
             <th>Sede</th>
             <th>Data Acquisto</th>
+            <th>Data Inserimento</th>
             <th>Costo</th>
             <th>Azioni</th>
         </tr>
@@ -164,7 +159,34 @@
         <!-- Le righe saranno aggiunte dinamicamente -->
     </tbody>
 </table>
-<button onclick="addAsset()" class="add-btn">Aggiungi Asset</button>
+<!-- Bottone per aggiungere un asset -->
+<button onclick="showAssetForm()">Aggiungi Asset</button>
+
+<!-- Form per aggiungere o modificare un asset -->
+<form id="assetForm" class="custom-form" style="display: none;">
+    <h2>Aggiungi/Modifica Asset</h2>
+    
+    <input id="nameAsset" type="text" placeholder="Nome Asset" required />
+    <input id="statusAsset" type="text" placeholder="Stato Asset (Attivi, Inattivi, In attesa, Richiedibili, Archiviati)" required />
+    
+    <label for="dipendenteAsset">Dipendente Assegnato:</label>
+    <select id="dipendenteAsset" required>
+        <option value="">Seleziona Dipendente</option>
+        <!-- Le opzioni dei dipendenti saranno caricate dinamicamente -->
+    </select>
+
+    <label for="dataInserimentoAsset">Data di Inserimento:</label>
+    <input id="dataInserimentoAsset" type="date" required />
+
+    <label for="dataAcquistoAsset">Data di Acquisto:</label>
+    <input id="dataAcquistoAsset" type="date" required />
+
+    <input id="costoAsset" type="number" step="0.01" placeholder="Costo Asset (€)" required />
+    
+    <button type="button" onclick="addAsset()">Conferma</button>
+</form>
+
+<!--Grafico-->
 <div class="container">
     <div class="chart-container">
     <canvas id="assetChart" width="300" height="150"></canvas>
@@ -214,7 +236,45 @@
         
      });
      </script>
-           
+    
+    <script>
+            // Funzione per caricare gli asset
+    async function loadAssets(filters = {}) {
+    try {
+        let url = 'http://localhost:3000/api/assets';
+        const params = new URLSearchParams(filters).toString();
+        if (params) url += `?${params}`;
+
+        const response = await fetch(url);
+        const data = await response.json();
+
+        const tableBody = document.querySelector("#assetTable tbody");
+        tableBody.innerHTML = "";
+
+        data.forEach(asset => {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+                <td>${asset.id_asset}</td>
+                <td>${asset.asset_name}</td>
+                <td>${asset.status}</td>
+                <td>${asset.dipendente}</td> <!-- Nome e cognome concatenati -->
+                <td>${asset.sede}</td> <!-- Nome della sede -->
+                <td>${formatDate(asset.data_acquisto)}</td>
+                <td>${formatDate(asset.data_inserimento)}</td>
+                <td>€${parseFloat(asset.costo).toFixed(2)}</td>
+                <td>
+                    <button class="edit-btn" onclick="editAsset(${asset.id_asset})">Modifica</button>
+                    <button class="delete-btn" onclick="deleteAsset(${asset.id_asset})">Elimina</button>
+                </td>
+            `;
+            tableBody.appendChild(row);
+        });
+    } catch (error) {
+        console.error('Errore durante il caricamento degli asset:', error);
+    }
+}
+
+    </script>
    
 
     <style>
@@ -412,9 +472,7 @@
                    left: 50px; 
                    padding: 20px;
                }
-       </style>  
-
-<body>
+</style>  
 
 <style>
     /* Stile per il bottone Aggiungi Asset */
@@ -466,66 +524,18 @@
 
 </style>
    
-
-
-   
-   
-
-   <script>
+<script>
+       //Funzione per mostrare/nascondere form
+       function showAssetForm() {
+    const form = document.getElementById("assetForm");
+    form.style.display = form.style.display === "none" ? "block" : "none";
+}
+       
        // Funzione per formattare le date
        function formatDate(date) {
            return dayjs(date).format('YYYY/MM/DD');
        }
-
-       // Funzione per caricare i dati dal backend con filtri
-       async function loadAssets(filters = {}) {
-           try {
-               let url = 'http://localhost:3000/api/assets';
-               const params = new URLSearchParams(filters).toString();
-               if (params) url += `?${params}`;
-               console.log("Fetching URL:", url);  // Aggiungi un log per vedere la URL
-               
-               const response = await fetch(url);
-               const data = await response.json();
-               if (filters.priceSort) {
-                   data.sort((a, b) => {
-                       const priceA = parseFloat(a.costo);
-                       const priceB = parseFloat(b.costo);
-
-                       if (filters.priceSort === 'asc') {
-                           return priceA - priceB; // Crescente
-                       } else {
-                           return priceB - priceA; // Decrescente
-                       }
-                   });
-               }
-
-               const tableBody = document.querySelector("#assetTable tbody");
-               tableBody.innerHTML = ""; // Reset della tabella
-
-               data.forEach(asset => {
-                   const row = document.createElement("tr");
-                   row.innerHTML = `
-                       <td>${asset.id}</td>
-                       <td>${asset.name}</td>
-                       <td>${asset.status}</td>
-                       <td>${formatDate(asset.data_inserimento)}</td>
-                       <td>${asset.sede}</td>
-                       <td>${formatDate(asset.data_acquisto)}</td>
-                       <td>€${parseFloat(asset.costo).toFixed(2)}</td>
-                      <td>
-                        <button class="edit-btn" onclick="editAsset(${asset.id})">Modifica</button>
-                        <button class="delete-btn" onclick="deleteAsset(${asset.id})">Elimina</button>
-                     </td>
-                   `;
-                   tableBody.appendChild(row);
-               });
-           } catch (error) {
-               console.error('Errore durante il caricamento degli asset:', error);
-           }
-       }
-
-    
+   
 
        // Applica i filtri dalla UI
        function applyFilters() {
@@ -544,218 +554,169 @@
        // Carica gli asset all'avvio
        loadAssets();
 
-   </script>
+</script>
 
-<script>
-    // Funzione per caricare gli asset
-    async function loadAssets(filters = {}) {
-        try {
-            let url = 'http://localhost:3000/api/assets';
-            const params = new URLSearchParams(filters).toString();
-            if (params) url += `?${params}`;
-            const response = await fetch(url);
-            const data = await response.json();
-
-            const tableBody = document.querySelector("#assetTable tbody");
-            tableBody.innerHTML = "";
-
-            data.forEach(asset => {
-                const row = document.createElement("tr");
-                row.innerHTML = `
-                    <td>${asset.id}</td>
-                    <td>${asset.name}</td>
-                    <td>${asset.status}</td>
-                    <td>${formatDate(asset.data_inserimento)}</td>
-                    <td>${asset.sede}</td>
-                    <td>${formatDate(asset.data_acquisto)}</td>
-                    <td>€${parseFloat(asset.costo).toFixed(2)}</td>
-                    <td>
-                        <button class="edit-btn" onclick="editAsset(${asset.id})">Modifica</button>
-                        <button class="delete-btn" onclick="deleteAsset(${asset.id})">Elimina</button>
-                    </td>
-                `;
-                tableBody.appendChild(row);
-            });
-        } catch (error) {
-            console.error('Errore durante il caricamento degli asset:', error);
-        }
-    }
-
+<script>    
     // Funzione per aggiungere un nuovo asset
     async function addAsset() {
-    const name = prompt('Inserisci il nome dell\'asset:');
-    if (!name) return alert('Il nome dell\'asset è obbligatorio.');
+    const assetData = {
+        name: document.getElementById('nameAsset').value,
+        status: document.getElementById('statusAsset').value,
+        data_inserimento: document.getElementById('dataInserimentoAsset').value,
+        data_acquisto: document.getElementById('dataAcquistoAsset').value,
+        costo: parseFloat(document.getElementById('costoAsset').value), // Assicurati che sia un numero
+        id_dipendenti_assets: document.getElementById('dipendenteAsset').value // Assicurati che sia un numero intero
+    };
 
-    const status = prompt('Inserisci lo stato dell\'asset (es. Attivo/Inattivo):');
-    if (!status) return alert('Lo stato dell\'asset è obbligatorio.');
-
-    const data_inserimento = prompt('Inserisci la data di inserimento (YYYY-MM-DD):');
-    if (!data_inserimento) return alert('La data di inserimento è obbligatoria.');
-
-    const sede = prompt('Inserisci la sede:');
-    if (!sede) return alert('La sede è obbligatoria.');
-
-    const data_acquisto = prompt('Inserisci la data di acquisto (YYYY-MM-DD):');
-    if (!data_acquisto) return alert('La data di acquisto è obbligatoria.');
-
-    const costo = parseFloat(prompt('Inserisci il costo (in euro):'));
-    if (isNaN(costo)) return alert('Il costo deve essere un numero valido.');
+    console.log('Dati inviati:', assetData);
 
     try {
         const response = await fetch('http://localhost:3000/api/assets', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ name, status, data_inserimento, sede, data_acquisto, costo })
+            body: JSON.stringify(assetData)
         });
 
-        if (response.ok) {
-            alert('Asset aggiunto con successo');
-            loadAssets();  // Ricarica la lista degli asset dopo l'aggiunta
-        } else {
-            alert('Errore durante l\'aggiunta dell\'asset');
+        console.log('Risposta dal server:', response);
+
+        if (!response.ok) {
+            throw new Error("Errore nella risposta del server");
         }
+
+        const data = await response.json();
+        console.log('Asset aggiunto:', data);
+
+        // Ricarica la lista degli asset
+        await loadAssets();
     } catch (error) {
         console.error('Errore durante l\'aggiunta dell\'asset:', error);
-        alert('Si è verificato un errore. Riprova più tardi.');
     }
 }
-document.addEventListener('DOMContentLoaded', () => {
-    const addButton = document.createElement('button');
-    addButton.textContent = "Aggiungi Asset";
-    addButton.classList.add('add-btn');
-    addButton.onclick = addAsset;
-    document.body.insertBefore(addButton, document.getElementById('assetTable'));
-});
 
-
-    // Funzione per modificare un asset
+    //Funzione per modificare gli asset
     async function editAsset(id) {
-        const name = prompt('Modifica il nome dell\'asset:');
-        const status = prompt('Modifica lo stato dell\'asset (es. Attivo/Inattivo):');
-        const data_inserimento = prompt('Modifica la data di inserimento (YYYY-MM-DD):');
-        const sede = prompt('Modifica la sede:');
-        const data_acquisto = prompt('Modifica la data di acquisto (YYYY-MM-DD):');
-        const costo = parseFloat(prompt('Modifica il costo (in euro):'));
+    try {
+        // Effettua una richiesta per ottenere i dettagli dell'asset
+        const response = await fetch(`http://localhost:3000/api/assets/${id}`);
+        const asset = await response.json();
+        console.log('Dati asset recuperati:', asset);
+
+        // Assicurati che il form sia visibile
+        document.getElementById('assetForm').style.display = 'block';
+
+        // Popola i campi del form con i dati esistenti dell'asset
+        document.getElementById('nameAsset').value = asset.asset_name || '';
+        document.getElementById('statusAsset').value = asset.status || '';
+        document.getElementById('dataInserimentoAsset').value = asset.data_inserimento || '';
+        document.getElementById('dataAcquistoAsset').value = asset.data_acquisto || '';
+        document.getElementById('costoAsset').value = asset.costo || '';
+        document.getElementById('dipendenteAsset').value = asset.id_dipendenti_assets || '';
+
+        // Aggiungi un campo nascosto per l'ID dell'asset
+        if (!document.getElementById('assetId')) {
+            const hiddenIdField = document.createElement('input');
+            hiddenIdField.type = 'hidden';
+            hiddenIdField.id = 'assetId';
+            document.getElementById('assetForm').appendChild(hiddenIdField);
+        }
+        document.getElementById('assetId').value = id;
+
+        // Modifica il testo del bottone e la funzione onclick
+        const confirmButton = document.querySelector('#assetForm button[type="button"]');
+        confirmButton.textContent = 'Aggiorna';
+        confirmButton.onclick = updateAsset;
+    } catch (error) {
+        console.error('Errore durante il recupero dei dettagli dell\'asset:', error);
+    }
+}
+
+    async function updateAsset() {
+        // Recupera i dati dal form
+        const id = document.getElementById('assetId').value;
+        const assetData = {
+            name: document.getElementById('nameAsset').value,
+            status: document.getElementById('statusAsset').value,
+            data_acquisto: document.getElementById('dataAcquistoAsset').value,
+            data_inserimento: document.getElementById('dataInserimentoAsset').value,
+            costo: parseFloat(document.getElementById('costoAsset').value),  // Assicurati che il costo sia un numero
+            id_dipendenti_assets: document.getElementById('dipendenteAsset').value
+        };
+
+        // Log dei dati prima dell'invio
+        console.log('Dati da inviare:', assetData);
 
         try {
             const response = await fetch(`http://localhost:3000/api/assets/${id}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name, status, data_inserimento, sede, data_acquisto, costo })
+                body: JSON.stringify(assetData)
             });
 
-            if (response.ok) {
-                alert('Asset modificato con successo');
-                loadAssets();
-            } else {
-                alert('Errore durante la modifica dell\'asset');
+            if (!response.ok) {
+                throw new Error("Errore nella risposta del server");
+            }
+
+            const data = await response.json();
+            console.log('Asset aggiornato:', data);
+
+            // Ricarica la lista degli asset
+            await loadAssets();
+
+            // Nascondi il form
+            document.getElementById('assetForm').style.display = 'none';
+        } catch (error) {
+            console.error('Errore durante l\'aggiornamento dell\'asset:', error);
+        }
+    }   
+
+    //Funzione per eliminare gli asset
+    async function deleteAsset(id) {
+            try {
+            const confirmation = confirm(`Sei sicuro di voler eliminare l'asset con ID ${id}?`);
+            if (confirmation) {
+                const response = await fetch(`http://localhost:3000/api/assets/${id}`, {
+                    method: 'DELETE',
+                });
+                if (response.ok) {
+                    alert(`Asset con ID ${id} eliminato.`);
+                    loadAssets(); // Ricarica la tabella dopo l'eliminazione
+                } else {
+                    alert('Errore durante l\'eliminazione dell\'asset.');
+                }
             }
         } catch (error) {
-            console.error('Errore durante la modifica dell\'asset:', error);
+            console.error('Errore durante l\'eliminazione dell\'asset:', error);
+        }
+    }
+        
+
+    //Funzione per caricare i dipendenti
+    async function loadDipendenti() {
+        try {
+            const response = await fetch('http://localhost:3000/api/dipendenti');
+            const data = await response.json();
+
+            const selectDipendente = document.getElementById("dipendenteAsset");
+            selectDipendente.innerHTML = `<option value="">Seleziona Dipendente</option>`;
+            
+            data.forEach(dipendente => {
+                const option = document.createElement("option");
+                option.value = dipendente.id_dipPK; // ID del dipendente
+                option.textContent = `${dipendente.nome_dip} ${dipendente.cognome}`; // Concatenazione di nome e cognome
+                selectDipendente.appendChild(option);
+            });
+        } catch (error) {
+            console.error("Errore durante il caricamento dei dipendenti:", error);
         }
     }
 
-    // Funzione per eliminare un asset
-    async function deleteAsset(id) {
-        if (confirm('Sei sicuro di voler eliminare questo asset?')) {
-            try {
-                const response = await fetch(`http://localhost:3000/api/assets/${id}`, {
-                    method: 'DELETE'
-                });
-
-                if (response.ok) {
-                    alert('Asset eliminato con successo');
-                    loadAssets();
-                } else {
-                    alert('Errore durante l\'eliminazione dell\'asset');
-                }
-            } catch (error) {
-                console.error('Errore durante l\'eliminazione dell\'asset:', error);
-            }
-        }
-    }
+    // Carica i dipendenti al caricamento della pagina
+    document.addEventListener("DOMContentLoaded", loadDipendenti);
 
     // Carica gli asset all'avvio
     loadAssets();
 </script>
 
-
-
-
-
- 
-
-<script>
-   // Funzione per ottenere il numero di asset per sede
-   async function loadAssetCountBySede() {
-       try {
-           const response = await fetch('http://localhost:3000/api/assets/count-by-sede');
-           const data = await response.json();
-           
-           // Dati per il grafico
-           const labels = [];
-           const assetCounts = [];
-
-           // Estrai le informazioni per il grafico
-           data.forEach(item => {
-               labels.push(item.sede);
-               assetCounts.push(item.asset_count);
-           });
-
-           // Configura il grafico con i dati ottenuti
-           const ctx = document.getElementById('assetChart').getContext('2d');
-           new Chart(ctx, {
-               type: 'bar', // Tipo di grafico: barra
-               data: {
-                   labels: labels, // Etichette delle sedi
-                   datasets: [{
-                       label: 'Numero di Asset',
-                       data: assetCounts, // Numero di asset per sede
-                       backgroundColor: [
-               'rgba(128, 0, 255, 0.6)',  // Viola brillante
-               'rgba(75, 0, 130, 0.8)',    // Viola scuro intenso (Indigo)
-               'rgba(153, 50, 204, 0.7)',  // Viola medio profondo (DarkOrchid)
-               'rgba(186, 85, 211, 0.6)'   // Viola intenso (MediumOrchid)
-               // Puoi aggiungere altre sfumature di viola brillante
-           ],
-           borderColor: [
-               'rgba(128, 0, 255, 1)',  // Viola brillante bordo
-               'rgba(75, 0, 130, 1)',    // Viola scuro intenso bordo (Indigo)
-               'rgba(153, 50, 204, 1)',  // Viola medio profondo bordo (DarkOrchid)
-               'rgba(186, 85, 211, 1)'   // Viola intenso bordo (MediumOrchid)
-               // Puoi aggiungere altri bordi viola brillante
-           ],
-                       borderWidth: 1
-                   }]
-               },
-               options: {
-                   responsive: true,
-                   plugins: {
-                           title: {
-                               display: true,
-                               text: 'Numero di asset per sede'
-                           },
-                           tooltip: {
-                               mode: 'index',
-                               intersect: false,
-                           }
-                       },
-                   scales: {
-                       y: {
-                           beginAtZero: true
-                       }
-                   }
-                   
-               }
-           });
-       } catch (error) {
-           console.error('Errore durante il caricamento dei dati:', error);
-       }
-   }
-
-   // Carica i dati quando la pagina viene caricata
-   loadAssetCountBySede();
-</script>
 
 
 <body>

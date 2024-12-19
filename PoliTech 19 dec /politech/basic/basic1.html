@@ -24,7 +24,7 @@
         <body>
         
             <div class="logo">
-                <a href="basic.html">
+                <a href="/politech/basic/basic1.html">
                     <img src="/politech/images/sfondodash.png" alt="logo">
                 </a>
             </div>
@@ -40,14 +40,14 @@
             <span style="font-family: 'Montserrat', sans-serif" id="username-display">Nome Utente</span>
             <div class="dropdown-menu" id="user-dropdown">
                 <ul>
-                    <li id="edit-profile">Modifica Profilo</li>
+                    <li id="edit-profile">Sei già abbonato</li>
                     <li id="logout">Logout</li>
                 </ul>
             </div>
             
             <div id="profile-menu" class="profile-menu">
                 <ul>
-                    <li><a href="#" id="edit-profile1">Modifica Profilo</a></li>
+                    <li><a href="#" id="edit-profile1">Sei già abbonato</a></li>
                     <li><a href="#" id="logout-link">Logout</a></li>
                 </ul>
             </div>
@@ -59,7 +59,7 @@
         <ul>
             <li>
                 <i class="fas fa-lock"></i>
-                <a href="/politech/basic/basic.html" style="text-decoration: none; color: inherit;"></a>
+                <a href="/politech/basic/basic1.html" style="text-decoration: none; color: inherit;"></a>
                 <span style="font-family: 'Montserrat', sans-serif" class="tooltip">Dashboard</span>
             
             </li>
@@ -82,25 +82,19 @@
                 </a>
             </li>
             <li>
-                <a href="/politech/PassaPremium.html" style="text-decoration: none; color: inherit;">
+                <a href="/politech/accessori/accessori.html" style="text-decoration: none; color: inherit;">
                     <i class="fas fa-plug"></i>
                     <span style="font-family: 'Montserrat', sans-serif" class="tooltip">Accessori</span>
                     </a>
             </li>
             <li>
-                <a href="/politech/PassaPremium.html" style="text-decoration: none; color: inherit;">
+                <a href="/politech/sedi/sedi.html" style="text-decoration: none; color: inherit;">
                     <i class="fas fa-building"></i>
                     <span style="font-family: 'Montserrat', sans-serif" class="tooltip">Sedi</span>
                 </a>
             </li>
             <li>
-                <a href="/politech/impostazioni/impostazioni.html" style="text-decoration: none; color: inherit;">
-                    <i class="fas fa-cogs"></i>
-                    <span style="font-family: 'Montserrat', sans-serif" class="tooltip">Impostazioni</span>
-                    </a>
-            </li>
-            <li>
-                <a href="/politech/PassaPremium.html" style="text-decoration: none; color: inherit;">
+                <a href="/politech/supporto/supporto.html" style="text-decoration: none; color: inherit;">
                     <i class="fas fa-tools"></i> <!-- Nuova icona: attrezzi -->
                     <span style="font-family: 'Montserrat', sans-serif" class="tooltip">Supporto</span>
                 </a>
@@ -211,16 +205,10 @@ const logoutLink = document.getElementById('logout-link');
 logoutLink.addEventListener('click', function() {
     
     localStorage.removeItem('username'); // Rimuove l'username dal localStorage
-    window.location.href = 'login.html'; // Reindirizza alla pagina di login
+    window.location.href = '/politech/login/login.html'; // Reindirizza alla pagina di login
 });
 
-// Modifica profilo
-const editProfileLink = document.getElementById('edit-profile1');
-editProfileLink.addEventListener('click', function() {
-    window.location.href = '/politech/aggiornamentoprofilo/aggiornamentoprofilo.html'; //reindirizza alla pagina modifica
-    
-   
-});
+
 
 
     </script>
@@ -488,6 +476,7 @@ td:last-child, th:last-child {
 </style>
 </head>
 
+//////////
 
 <script>
     // Simula l'indice delle pagine da cercare

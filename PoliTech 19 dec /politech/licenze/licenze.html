@@ -92,14 +92,8 @@
                 </a>
             </li>
             <li>
-                <a href="/politech/impostazioni/impostazioni.html" style="text-decoration: none; color: inherit;">
-                    <i class="fas fa-cogs"></i>
-                    <span style="font-family: 'Montserrat', sans-serif" class="tooltip">Impostazioni</span>
-                    </a>
-            </li>
-            <li>
                 <a href="/politech/supporto/supporto.html" style="text-decoration: none; color: inherit;">
-                    <i class="fas fa-laptop"></i>
+                    <i class="fas fa-tools"></i>
                     <span style="font-family: 'Montserrat', sans-serif" class="tooltip">Supporto</span>
                     </a>
             </li>
@@ -109,19 +103,7 @@
 <!--Da rifare-->
 <main>
     <!-- Sezione di filtri -->
-        <div id="filters">
-            <label for="filterName">Filtra per nome licenza:</label>
-            <input type="text" id="filterName" placeholder="Nome licenza" oninput="applyFilters()" />
-
-            <label for="filterDepartment">Filtra per dipartimento:</label>
-            <select id="filterDepartment" onchange="applyFilters()">
-                <option value="">Seleziona dipartimento</option>
-                <!-- Le opzioni dipartimento saranno caricate dinamicamente -->
-            </select>
-
-            <label for="filterProductKey">Filtra per product key:</label>
-            <input type="text" id="filterProductKey" placeholder="Product Key" oninput="applyFilters()" />
-        </div>
+        
 
     <!-- Tabella delle licenze -->
         <table id="licenzaTable">
@@ -601,8 +583,9 @@
         function showLicenseForm() {
     // Mostra il form
     document.getElementById('licenseForm').style.display = 'block';
-
-    // Scorri verso il form in modo fluido
+   
+    
+// Scorri verso il form in modo fluido
     document.getElementById('licenseForm').scrollIntoView({ behavior: 'smooth' });
 
     // Resetta tutti i campi del form
@@ -628,6 +611,31 @@
     loadDepartments();
 }
         
+
+// Funzione per eliminare una licenza
+async function deleteLicense(id) {
+    const confirmation = confirm('Sei sicuro di voler eliminare questa licenza?');
+    if (!confirmation) {
+        return;  // Se l'utente non conferma, esci dalla funzione
+    }
+
+    try {
+        // Invia una richiesta DELETE per eliminare la licenza
+        const response = await fetch(`http://localhost:3000/api/licenze/${id}`, {
+            method: 'DELETE'
+        });
+
+        if (response.ok) {
+            alert('Licenza eliminata con successo');
+            // Ricarica la lista delle licenze (opzionale)
+            await loadLicenses();
+        } else {
+            alert('Errore durante l\'eliminazione della licenza');
+        }
+    } catch (error) {
+        console.error('Errore durante l\'eliminazione della licenza:', error);
+    }
+}
         // Carica le licenze all'avvio
             loadLicenses();
 

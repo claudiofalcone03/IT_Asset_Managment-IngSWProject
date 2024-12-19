@@ -7,6 +7,9 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const path = require('path');
 const dayjs = require('dayjs');
+const { createObjectCsvWriter } = require('csv-writer');
+const archiver = require('archiver');
+const fs = require('fs');
 
 
 app.use(express.static(path.join(__dirname, 'politech')));
@@ -256,58 +259,83 @@ app.get('/api/asset-status', (req, res) => {
   });
 });
 
-//Ottenere tutti gli assets
+//ASSET
+//
+
+// Ottenere tutti gli asset con nome e cognome del dipendente e il nome della sede
 app.get('/api/assets', (req, res) => {
-  const { status, sede } = req.query; // Ottieni i parametri dalla query string
-  const { priceSort } = req.query; 
+  const sql = `
+    SELECT 
+      a.id AS id_asset, 
+      a.name AS asset_name, 
+      a.status, 
+      a.data_inserimento, 
+      a.data_acquisto, 
+      a.costo, 
+      CONCAT(d.nome_dip, ' ', d.cognome) AS dipendente,
+      s.nome AS sede
+    FROM assets a
+    LEFT JOIN dipendenti d ON a.id_dipendenti_assets = d.id_dipPK
+    LEFT JOIN sedi s ON d.id_sede_dip = s.id
+  `;
 
-  // Crea una query di base
-  let sql = 'SELECT * FROM assets WHERE 1=1';
-  const params = [];
-
-  // Aggiungi i filtri, se presenti
-  if (status) {
-    sql += ' AND status = ?';
-    params.push(status);
-  }
-  if (sede) {
-    sql += ' AND sede = ?';
-    params.push(sede);
-
-    
-  }
-  if (priceSort) {
-    if (priceSort === 'asc') {
-      sql += ' ORDER BY costo ASC';
-    } else if (priceSort === 'desc') {
-      sql += ' ORDER BY costo DESC';
-    }
-  }
-  // Esegui la query con i filtri
-  db.query(sql, params, (err, results) => {
+  db.query(sql, (err, results) => {
     if (err) {
-      console.error('Errore durante il recupero dei dati:', err);
-      res.status(500).send('Errore server');
-      return;
+      console.error('Errore durante il recupero degli asset:', err);
+      return res.status(500).send('Errore server');
     }
-    res.json(results); // Rispondi con i dati filtrati
+    res.json(results);
   });
 });
 
 
-
-//ASSET
-//
-// Aggiungi nuovo asset
-app.post('/api/assets', (req, res) => {
-  const { name, status, data_inserimento, sede, data_acquisto, costo } = req.body;
+// Ottenere un singolo asset con nome e cognome del dipendente e il nome della sede
+app.get('/api/assets/:id', (req, res) => {
+  const { id } = req.params;
 
   const sql = `
-    INSERT INTO assets (name, status, data_inserimento, sede, data_acquisto, costo)
+    SELECT 
+      a.id AS id_asset, 
+      a.name AS asset_name, 
+      a.status, 
+      a.data_inserimento, 
+      a.data_acquisto, 
+      a.costo, 
+      CONCAT(d.nome_dip, ' ', d.cognome) AS dipendente,
+      s.nome AS sede
+    FROM assets a
+    LEFT JOIN dipendenti d ON a.id_dipendenti_assets = d.id_dipPK
+    LEFT JOIN sedi s ON d.id_sede_dip = s.id
+    WHERE a.id = ?
+  `;
+
+  db.query(sql, [id], (err, results) => {
+    if (err) {
+      console.error('Errore durante il recupero dell\'asset:', err);
+      return res.status(500).send('Errore server');
+    }
+
+    if (results.length === 0) {
+      return res.status(404).send('Asset non trovato');
+    }
+
+    res.json(results[0]); // Ritorna il primo risultato come oggetto singolo
+  });
+});
+
+
+// Aggiungi nuovo asset
+app.post('/api/assets', (req, res) => {
+  const { name, status, data_inserimento, data_acquisto, costo, id_dipendenti_assets } = req.body;
+
+  // SQL per inserire il nuovo asset senza il campo 'sede'
+  const sql = `
+    INSERT INTO assets (name, status, data_inserimento, data_acquisto, costo, id_dipendenti_assets)
     VALUES (?, ?, ?, ?, ?, ?)
   `;
 
-  db.query(sql, [name, status, data_inserimento, sede, data_acquisto, costo], (err, results) => {
+  // Esegui la query
+  db.query(sql, [name, status, data_inserimento, data_acquisto, costo, id_dipendenti_assets], (err, results) => {
     if (err) {
       console.error('Errore durante l\'aggiunta dell\'asset:', err);
       return res.status(500).send('Errore server');
@@ -318,30 +346,46 @@ app.post('/api/assets', (req, res) => {
 
 // Modifica un asset
 app.put('/api/assets/:id', (req, res) => {
-  const { id } = req.params;
-  const { name, status, data_inserimento, sede, data_acquisto, costo } = req.body;
+  const { id } = req.params; // ID dell'asset da modificare
+  const { name, status, data_inserimento, data_acquisto, costo, id_dipendenti_assets } = req.body;
 
+  // Controlla se l'ID del dipendente è valido
+  if (!id_dipendenti_assets) {
+    return res.status(400).send('Il campo "id_dipendenti_assets" è obbligatorio.');
+  }
+
+  // Costruisci la query SQL per aggiornare l'asset
   const sql = `
     UPDATE assets
-    SET name = ?, status = ?, data_inserimento = ?, sede = ?, data_acquisto = ?, costo = ?
+    SET name = ?, status = ?, data_inserimento = ?, data_acquisto = ?, costo = ?, id_dipendenti_assets = ?
     WHERE id = ?
   `;
 
-  db.query(sql, [name, status, data_inserimento, sede, data_acquisto, costo, id], (err, results) => {
+  // Esegui la query
+  db.query(sql, [name, status, data_inserimento, data_acquisto, costo, id_dipendenti_assets, id], (err, results) => {
     if (err) {
       console.error('Errore durante la modifica dell\'asset:', err);
       return res.status(500).send('Errore server');
     }
+
+    // Se l'asset non è stato trovato, restituisci un errore
+    if (results.affectedRows === 0) {
+      return res.status(404).send('Asset non trovato');
+    }
+
+    // Se la modifica è avvenuta correttamente
     res.send({ message: 'Asset aggiornato con successo' });
   });
 });
 
 // Rimuovi un asset
 app.delete('/api/assets/:id', (req, res) => {
-  const { id } = req.params;
+  const { id } = req.params; // ID dell'asset da eliminare
 
+  // SQL per eliminare l'asset
   const sql = 'DELETE FROM assets WHERE id = ?';
 
+  // Esegui la query
   db.query(sql, [id], (err, results) => {
     if (err) {
       console.error('Errore durante l\'eliminazione dell\'asset:', err);
@@ -582,7 +626,7 @@ app.get('/api/dipendenti', (req, res) => {
 
 
 // SEDI
-
+//
 //Aggiunta sedi
 app.post('/api/sedi', (req, res) => {
   const { nome, localita, numero_persone, posti_disponibili } = req.body;
@@ -1162,6 +1206,80 @@ app.get('/api/licenze-in-scadenza', (req, res) => {
     res.json(results);
   });
 });
+
+//Funzione per esportare in CSV
+app.get('/api/export-all', (req, res) => {
+  // Recupera l'elenco delle tabelle nel database
+  db.query('SHOW TABLES', (err, tables) => {
+      if (err) {
+          console.error('Errore durante l\'estrazione delle tabelle:', err);
+          return res.status(500).send('Errore durante l\'estrazione delle tabelle.');
+      }
+
+      // Crea un archivio ZIP
+      const zipFilePath = path.join(__dirname, 'database_backup.zip');
+      const archive = archiver('zip', {
+          zlib: { level: 9 } // Livello di compressione massimo
+      });
+
+      // Crea un flusso di scrittura per il file ZIP
+      const output = fs.createWriteStream(zipFilePath);
+      archive.pipe(output);
+
+      // Esporta ogni tabella in un file CSV separato
+      let tablesProcessed = 0;
+      tables.forEach((table) => {
+          const tableName = table[`Tables_in_${db.config.database}`];
+          const sql = `SELECT * FROM \`${tableName}\``;
+
+          db.query(sql, (err, results) => {
+              if (err) {
+                  console.error(`Errore durante il recupero dei dati per la tabella ${tableName}:`, err);
+              } else {
+                  const csvWriter = createObjectCsvWriter({
+                      path: `${tableName}.csv`,  // Nome del file CSV per questa tabella
+                      header: Object.keys(results[0] || {}).map(column => ({ id: column, title: column }))
+                  });
+
+                  csvWriter.writeRecords(results)
+                      .then(() => {
+                          console.log(`Tabella ${tableName} esportata con successo`);
+
+                          // Aggiungi il file CSV all'archivio ZIP
+                          archive.append(fs.createReadStream(`${tableName}.csv`), { name: `${tableName}.csv` });
+
+                          // Rimuovi il file temporaneo CSV
+                          fs.unlinkSync(`${tableName}.csv`);
+
+                          tablesProcessed++;
+                          if (tablesProcessed === tables.length) {
+                              archive.finalize();
+                          }
+                      })
+                      .catch((error) => {
+                          console.error(`Errore durante la scrittura del CSV per la tabella ${tableName}:`, error);
+                      });
+              }
+          });
+      });
+
+      // Quando l'archivio ZIP è pronto, invia una risposta al client
+      output.on('close', () => {
+          console.log(`Archivio ZIP creato: ${zipFilePath}`);
+          res.download(zipFilePath, 'database_backup.zip', (err) => {
+              if (err) {
+                  console.error('Errore durante il download del file ZIP:', err);
+              } else {
+                  // Dopo il download, elimina il file ZIP dal server
+                  fs.unlinkSync(zipFilePath);
+              }
+          });
+      });
+  });
+});
+
+
+
 // Avvia il server sulla porta 3000
 app.listen(3000, () => {
   console.log('Server in ascolto sulla porta 3000');

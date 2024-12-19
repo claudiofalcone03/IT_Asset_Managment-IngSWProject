@@ -94,12 +94,6 @@
                 </a>
             </li>
             <li>
-                <a href="/politech/impostazioni/impostazioni.html" style="text-decoration: none; color: inherit;">
-                    <i class="fas fa-cogs"></i>
-                    <span style="font-family: 'Montserrat', sans-serif" class="tooltip">Impostazioni</span>
-                    </a>
-            </li>
-            <li>
                 <a href="/politech/supporto/supporto.html" style="text-decoration: none; color: inherit;">
                     <i class="fas fa-tools"></i> <!-- Nuova icona: attrezzi -->
                     <span style="font-family: 'Montserrat', sans-serif" class="tooltip">Supporto</span>
@@ -298,7 +292,7 @@
                         alert('Dipendente eliminato con successo');
                         applyFilters();
                     } else {
-                        alert('Errore durante l\'eliminazione del dipendente');
+                        alert('Errore durante l\'eliminazione del dipendente (Prova ad eliminare prima l\'asset associato)');
                     }
                 } catch (error) {
                     console.error('Errore durante l\'eliminazione:', error);

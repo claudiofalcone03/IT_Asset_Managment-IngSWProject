@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.33, for macos13 (arm64)
+-- MySQL dump 10.13  Distrib 9.1.0, for macos14 (arm64)
 --
 -- Host: localhost    Database: politech_db
 -- ------------------------------------------------------
--- Server version	8.0.33
+-- Server version	9.1.0
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -29,7 +29,10 @@ CREATE TABLE `accessori` (
   `categoria_accessori` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `modello_accessori` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `costo_accessori` float NOT NULL,
-  PRIMARY KEY (`id_accessori`)
+  `id_sede_accessori` int DEFAULT NULL,
+  PRIMARY KEY (`id_accessori`),
+  KEY `accessori_sedi_FK` (`id_sede_accessori`),
+  CONSTRAINT `accessori_sedi_FK` FOREIGN KEY (`id_sede_accessori`) REFERENCES `sedi` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -39,7 +42,7 @@ CREATE TABLE `accessori` (
 
 LOCK TABLES `accessori` WRITE;
 /*!40000 ALTER TABLE `accessori` DISABLE KEYS */;
-INSERT INTO `accessori` VALUES (2,'computer','XYZ709','laptop','Dell XPS 13',0),(5,'Tastiera','JGUJOPN89','Periferica','Logich GM master',78),(11,'mac34','djecjwbc','laptop','IOS',1290),(12,'Mouse Logitech MX Master 3','MXM-12345','Periferica','Logitech MX Master 3',99.99),(13,'Tastiera meccanica Razer BlackWidow','RBW-67890','Periferica','Razer BlackWidow V3',129.99),(14,'Hard Disk Esterno Seagate 1TB','SGT-11223','Archiviazione','Seagate Backup Plus Slim',69.99),(15,'Adattatore USB-C Multiport','AUC-44556','Adattatori','HyperDrive Duo',49.99),(16,'Cuffie Bose Noise Cancelling 700','BNC-77889','Audio','Bose 700',379.99),(17,'Webcam Logitech C920 HD Pro','LWC-99221','Periferica','Logitech C920',79.99),(18,'Hub USB 4 porte Anker','ANK-33445','Adattatori','Anker 4-Port USB 3.0 Hub',29.99),(19,'Batteria Esterna Anker 20,000mAh','BTE-66789','Accessori di Alimentazione','Anker PowerCore 20K',59.99),(20,'Cover per Laptop 13\" Kensington','CVL-11234','Protezione','Kensington Laptop Sleeve 13\"',25.99),(21,'Base di Raffreddamento per Laptop Cooler Master','CMR-22345','Supporto','Cooler Master Notepal X3',49.99);
+INSERT INTO `accessori` VALUES (2,'computer','XYZ709','laptop','Dell XPS 13',0,NULL),(5,'Tastiera','JGUJOPN89','Periferica','Logich GM master',78,NULL),(12,'Mouse Logitech MX Master 3','MXM-12345','Periferica','Logitech MX Master 3',99.99,NULL),(13,'Tastiera meccanica Razer BlackWidow','RBW-67890','Periferica','Razer BlackWidow V3',129.99,NULL),(14,'Hard Disk Esterno Seagate 1TB','SGT-11223','Archiviazione','Seagate Backup Plus Slim',69.99,NULL),(15,'Adattatore USB-C Multiport','AUC-44556','Adattatori','HyperDrive Duo',49.99,NULL),(16,'Cuffie Bose Noise Cancelling 700','BNC-77889','Audio','Bose 700',379.99,NULL),(17,'Webcam Logitech C920 HD Pro','LWC-99221','Periferica','Logitech C920',79.99,NULL),(18,'Hub USB 4 porte Anker','ANK-33445','Adattatori','Anker 4-Port USB 3.0 Hub',29.99,NULL),(19,'Batteria Esterna Anker 20,000mAh','BTE-66789','Accessori di Alimentazione','Anker PowerCore 20K',59.99,NULL),(20,'Cover per Laptop 13\" Kensington','CVL-11234','Protezione','Kensington Laptop Sleeve 13\"',25.99,NULL);
 /*!40000 ALTER TABLE `accessori` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -83,11 +86,13 @@ CREATE TABLE `assets` (
   `name` varchar(255) NOT NULL,
   `status` enum('Attivi','Inattivi','Archiviati','Richiedibili','In Attesa') NOT NULL DEFAULT 'Attivi',
   `data_inserimento` date DEFAULT NULL,
-  `sede` varchar(255) DEFAULT NULL,
   `data_acquisto` date DEFAULT NULL,
   `costo` float DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `id_dipendenti_assets` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id_dipendenti_assets` (`id_dipendenti_assets`),
+  CONSTRAINT `id_dipendenti_assets` FOREIGN KEY (`id_dipendenti_assets`) REFERENCES `dipendenti` (`id_dipPK`)
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -96,7 +101,7 @@ CREATE TABLE `assets` (
 
 LOCK TABLES `assets` WRITE;
 /*!40000 ALTER TABLE `assets` DISABLE KEYS */;
-INSERT INTO `assets` VALUES (2,'Ipad','Richiedibili','2024-09-13','Sede filiale','2024-09-06',359),(4,'Laptop','Inattivi','2024-11-15','Sede secondaria','2024-11-02',649),(5,'Tablet','Archiviati','2024-12-11','Sede principale','2024-12-07',429),(6,'Iphone','Attivi','2024-12-28','Sede principale','2024-12-27',1199),(7,'Laptop','Richiedibili','2024-07-12','Sede secondaria','2024-07-11',239.99),(12,'Telefono','Attivi','2023-12-05','Sede principale','2034-05-12',456);
+INSERT INTO `assets` VALUES (2,'Ipad Pro11','Attivi','2024-12-20','2024-12-12',3545,1),(4,'Laptop','Inattivi','2024-11-15','2024-11-02',649,8),(26,'Laptop Dell','In Attesa','2003-12-12','2004-01-25',680,1),(27,'Asset 16','Attivi','2024-12-17','2024-12-01',500,1),(28,'MacBook','Richiedibili','2007-02-12','2018-03-12',456,8),(29,'MacBook','Archiviati','2007-10-03','2024-12-19',456,1);
 /*!40000 ALTER TABLE `assets` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -111,7 +116,7 @@ CREATE TABLE `dipartimento` (
   `id_dipartimento` int NOT NULL AUTO_INCREMENT,
   `nome_dipartimento` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   PRIMARY KEY (`id_dipartimento`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -120,7 +125,7 @@ CREATE TABLE `dipartimento` (
 
 LOCK TABLES `dipartimento` WRITE;
 /*!40000 ALTER TABLE `dipartimento` DISABLE KEYS */;
-INSERT INTO `dipartimento` VALUES (1,'Dipartimento A'),(2,'Dipartimento B'),(3,'Dipartimento C'),(4,'Dipartimento D'),(6,'Dipartimento gatto');
+INSERT INTO `dipartimento` VALUES (1,'Dipartimento A'),(2,'Dipartimento B'),(3,'Dipartimento C'),(4,'Dipartimento D'),(6,'Dipartimento gatto'),(7,'Dipartimento cane');
 /*!40000 ALTER TABLE `dipartimento` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -153,7 +158,7 @@ CREATE TABLE `dipendenti` (
 
 LOCK TABLES `dipendenti` WRITE;
 /*!40000 ALTER TABLE `dipendenti` DISABLE KEYS */;
-INSERT INTO `dipendenti` VALUES (1,'Annamaria','Rossi','anna.bianchi@email.it','JR',1,4),(2,'Lucia','Rossi','lucia.rossi@email.com','Senior',6,2),(8,'Claudio ','Falcone','c.falcone1@studenti.poliba.it','Studente',9,3),(9,'Federico ','Falcone','fedefalkone','fggs',1,1),(13,'Pier','Paolo','giuseppe','Napoletana',6,2),(16,'asf','sdaf','das','da',1,4),(17,'r12','rq','qr','rq',10,1),(18,'vasd','avds','fvd','vas',6,NULL),(19,'Francesco','Pappa','email pappa','Pappa',3,4),(21,'Francesco','Di Tanno','emailfrancesco','Capo',1,1),(22,'Vittorio','Di donna','nkfakfnak','Bari',3,6),(23,'Anna','Tassaro','annatassero@gmail.com','JR',9,3);
+INSERT INTO `dipendenti` VALUES (1,'Annamaria','Rossi','anna.bianchi@email.it','JR',1,4),(2,'Lucia','Rossi','lucia.rossi@email.com','Senior',6,2),(8,'Claudio ','Falcone','c.falcone1@studenti.poliba.it','Studente',9,3);
 /*!40000 ALTER TABLE `dipendenti` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -184,7 +189,7 @@ CREATE TABLE `licenze` (
 
 LOCK TABLES `licenze` WRITE;
 /*!40000 ALTER TABLE `licenze` DISABLE KEYS */;
-INSERT INTO `licenze` VALUES (1,'GNU General Public License (GPL)',100,NULL,'GPL12345','2023-01-01','2025-01-01'),(2,'MIT License',50,2,'MIT98765','2023-03-15','2025-03-15'),(3,'Microsoft Office 365',149.99,3,'MSO365ABCD','2024-05-10','2026-05-10'),(4,'Apache License 2.0',49.99,4,'APACHE123','2022-06-30','2024-06-30'),(5,'Adobe Photoshop CC',19.99,NULL,'CC4000XYZ','2023-11-01','2025-11-01'),(6,'Creative Commons Attribution 4.0',35.99,2,'ADOBEPS456','2024-02-20','2026-02-20'),(16,'Windows 7 Sabrina',1490,NULL,'DEF456-XYZ789-1011SKjKSJ','2024-12-28','2024-12-15'),(17,'Macos',531,3,'eqqr','2024-12-27','2024-12-28'),(18,'android',32,3,'eeq89','2024-12-15','2024-12-24');
+INSERT INTO `licenze` VALUES (1,'GNU General Public License (GPL)',100,4,'GPL12345','2023-01-01','2025-01-01'),(2,'MIT License',50,2,'MIT98765','2023-03-15','2025-03-15'),(3,'Microsoft Office 365',149.99,3,'MSO365ABCD','2024-05-10','2026-05-10'),(4,'Apache License 2.0',49.99,4,'APACHE123','2022-06-30','2024-06-30'),(5,'Adobe Photoshop CC',19.99,2,'CC4000XYZ','2023-11-01','2025-11-01'),(6,'Creative Commons Attribution 4.0',35.99,2,'ADOBEPS456','2024-02-20','2026-02-20');
 /*!40000 ALTER TABLE `licenze` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -202,7 +207,7 @@ CREATE TABLE `sedi` (
   `numero_persone` int NOT NULL,
   `posti_disponibili` int NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -249,4 +254,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-12-14 15:21:44
+-- Dump completed on 2024-12-19 21:05:49
