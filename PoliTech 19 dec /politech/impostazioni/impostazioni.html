@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asset</title>
+    <link rel="stylesheet" href="/politech/css/style1.css">
+    <link rel="stylesheet" href="/politech/css/Licenze_FormAggiungi.css">
+    <script src="/politech/script.js" defer></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="icon" href="/favicon.png" type="image/png">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.11.7/dayjs.min.js"></script>
+</head>
+
+<!-- Barra superiore -->
+<header>
+        
+    <body>
+     <!-- Elemento cliccabile -->
+     <div class="logo">
+        <a href="/politech/basic/basic.html">
+            <img src="/politech/images/sfondodash.png" alt="logo">
+        </a>
+    </div>
+       
+    <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Cerca...">
+        <ul class="search-results" id="resultsList"></ul> <!-- Menu a tendina -->
+        
+    </div>
+  
+    <div class="user-info">
+        <img src="/politech/images/084a1a23-1c56-4c8b-a301-702e66eb5c6d.png" alt="Foto Utente" id="user-image" style="cursor: pointer;">
+        <span style="font-family: 'Montserrat', sans-serif" id="username-display">Nome Utente</span>
+        <div class="dropdown-menu" id="user-dropdown">
+            <ul>
+                
+                <li id="logout">Logout</li>
+            </ul>
+        </div>
+        
+        <div id="profile-menu" class="profile-menu">
+            <ul>
+                
+                <li><a href="#" id="logout-link">Logout</a></li>
+            </ul>
+        </div>
+    </div>
+</header>
+
+<!-- Menu laterale -->
+<aside>
+        <ul>
+            <li>
+                <i class="fas fa-lock"></i>
+                <a href="/politech/basic/basic.html" style="text-decoration: none; color: inherit;"></a>
+                <span style="font-family: 'Montserrat', sans-serif" class="tooltip">Dashboard</span>
+            
+            </li>
+            <li>
+                <a href="/politech/asset/asset.html" style="text-decoration: none; color: inherit;">
+                <i class="fas fa-laptop"></i>
+                <span style="font-family: 'Montserrat', sans-serif" class="tooltip">Asset</span>
+                </a>
+            </li>
+            <li>
+                <a href="/politech/dipendenti/dipendenti.html" style="text-decoration: none; color: inherit;">
+                    <i class="fas fa-users"></i>
+                    <span style="font-family: 'Montserrat', sans-serif" class="tooltip">Dipendenti</span>
+                    </a>
+            </li>
+            <li>
+                <a href="/politech/licenze/licenze.html" style="text-decoration: none; color: inherit;">
+                    <i class="fas fa-file-alt"></i>
+                    <span style="font-family: 'Montserrat', sans-serif" class="tooltip">Licenze</span>
+                </a>
+            </li>
+            <li>
+                <a href="/politech/accessori/accessori.html" style="text-decoration: none; color: inherit;">
+                    <i class="fas fa-plug"></i>
+                    <span style="font-family: 'Montserrat', sans-serif" class="tooltip">Accessori</span>
+                    </a>
+            </li>
+            <li>
+                <a href="/politech/sedi/sedi.html" style="text-decoration: none; color: inherit;">
+                    <i class="fas fa-building"></i>
+                    <span style="font-family: 'Montserrat', sans-serif" class="tooltip">Sedi</span>
+                </a>
+            </li>
+            <li>
+                <a href="/politech/impostazioni/impostazioni.html" style="text-decoration: none; color: inherit;">
+                    <i class="fas fa-cogs"></i>
+                    <span style="font-family: 'Montserrat', sans-serif" class="tooltip">Impostazioni</span>
+                    </a>
+            </li>
+            <li>
+                <a href="/politech/supporto/supporto.html" style="text-decoration: none; color: inherit;">
+                    <i class="fas fa-tools"></i> <!-- Nuova icona: attrezzi -->
+                    <span style="font-family: 'Montserrat', sans-serif" class="tooltip">Supporto</span>
+                </a>
+            </li>
+            
+        </ul>
+</aside>
+
+<style>
+    .search-results {
+        position: absolute; /* Posizionamento assoluto rispetto alla barra di ricerca */
+            top: 100%; /* Posiziona sotto l'input */
+            left: 50%;
+            transform: translateX(-50%);
+            right: 0;
+            width: 200px;
+            background: white;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            z-index: 10;
+            display: none; /* Nascondi i risultati di default */
+            max-height: 150px; /* Limita l'altezza massima del menu */
+            overflow-y: auto; /* Aggiungi lo scrolling se necessario */
+    }
+
+    .search-results li {
+            padding: 8px; /* Riduci il padding per una dimensione più piccola */
+            cursor: pointer;
+            font-size: 14px; /* Riduci la dimensione del font */
+        }
+
+    .search-results li:hover {
+        background-color: #f0f0f0;
+    }
+</style>
+
+<script>
+    // Simula l'indice delle pagine da cercare
+    const sitePages = [
+        { title: "Asset", url: "/politech/asset/asset.html", content: "asset" },
+        { title: "Dashboard", url: "/politech/index.html", content: "Informazioni generali" },
+        { title: "Servizi", url: "/politech/services/services.html", content: "I nostri servizi includono..." },
+        { title: "Contatti", url: "/politech/contact/contact.html", content: "Contattaci al nostro indirizzo email" }
+    ];
+
+    const searchInput = document.getElementById('searchInput');
+    const resultsList = document.getElementById('resultsList');
+
+    searchInput.addEventListener('input', function() {
+        const query = searchInput.value.toLowerCase();
+        resultsList.innerHTML = ''; // Pulisci i risultati
+
+        if (query) {
+            const filteredResults = sitePages.filter(page =>
+                page.title.toLowerCase().includes(query) || 
+                page.content.toLowerCase().includes(query)
+            );
+
+            filteredResults.forEach(result => {
+                const li = document.createElement('li');
+                li.innerHTML = `<a href="${result.url}">${result.title}</a> - ${result.content}`;
+                li.addEventListener('click', function() {
+                    window.location.href = result.url; // Reindirizza quando si fa clic
+                });
+                resultsList.appendChild(li);
+            });
+
+            resultsList.style.display = filteredResults.length > 0 ? 'block' : 'none'; // Mostra/nascondi il menu a tendina
+        } else {
+            resultsList.style.display = 'none'; // Nascondi se non c'è nulla
+        }
+    });
+
+    // Chiudi i risultati quando si fa clic altrove
+    document.addEventListener('click', function(event) {
+        if (!searchInput.contains(event.target) && !resultsList.contains(event.target)) {
+            resultsList.style.display = 'none';
+        }
+    });
+</script>
+
+<style>
+    body {
+        position: relative;
+       font-family: 'Montserrat', Tahoma, Geneva, Verdana, sans-serif;
+       margin: 0px;
+       background-color: #f1f1f1;
+       color: #333;
+       line-height: 1.6;
+   }
+       /* Stile per la tabella */
+       table {
+           width: 100%;
+           border-collapse: collapse;
+           margin-top: 30px;
+           margin-bottom: 30px;
+           border-radius: 8px;
+           overflow: hidden;
+           box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Aggiungi ombra alla tabella */
+       }
+   
+       table th, table td {
+           padding: 15px;
+           text-align: left;
+           font-size: 16px;
+           transition: background-color 0.3s ease; /* Aggiungi effetto transizione */
+       }
+   
+       table th {
+           background-color: #4b0082; /* Viola più intenso */
+           color: white;
+           font-weight: 600;
+       }
+   
+       table tbody tr:nth-child(even) {
+           background-color: #f7f7f7; /* Colore alternato più delicato */
+       }
+   
+       table tbody tr:hover {
+           background-color: #ffffff; /* Hover viola chiaro */
+           transform: translateY(-2px); /* Effetto di sollevamento al passaggio del mouse */
+       }
+   
+       /* Contenitore per i filtri */
+       .filters {
+           margin-bottom: 30px;
+           padding: 20px;
+           background-color: #f9f9f9;
+           border: 1px solid #ddd;
+           border-radius: 8px;
+           box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Ombra leggera */
+       }
+   
+       .filters label {
+           margin-right: 15px;
+           font-weight: bold;
+           color: #555;
+       }
+   
+       .filters select, .filters input[type="text"] {
+           padding: 8px 12px;
+           font-size: 14px;
+           border: 1px solid #ccc;
+           border-radius: 5px;
+           background-color: #fff;
+           transition: border-color 0.3s ease;
+       }
+   
+       .filters select:focus, .filters input[type="text"]:focus {
+           border-color: #4b0082; /* Colore di focus */
+           outline: none;
+       }
+   
+       .filters button {
+           background-color: #4b0082;
+           color: white;
+           padding: 8px 20px;
+           font-size: 16px;
+           border: none;
+           border-radius: 5px;
+           cursor: pointer;
+           transition: background-color 0.3s ease;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombra leggera sul pulsante */
+       }
+   
+       .filters button:hover {
+           background-color: #6a0dad; /* Colore più scuro al passaggio del mouse */
+           transform: translateY(-2px); /* Effetto di sollevamento */
+       }
+   
+       /* Stile per i messaggi */
+       .message {
+           font-size: 18px;
+           color: #555;
+           padding: 10px;
+           border-radius: 5px;
+           margin-top: 20px;
+           background-color: #e0f7fa;
+           border: 1px solid #b2ebf2;
+       }
+   
+       /* Stile per le icone */
+       .icon {
+           margin-right: 10px;
+       }
+
+ 
+       .container {
+                   display: flex;
+                   justify-content: space-between;
+                   gap: 20px;
+                   margin-top: 30px;
+               }
+       
+               .chart-container {
+                   width: 48%;  /* Impostiamo una larghezza di 48% per ogni grafico */
+                   height: 400px;
+                   left: 50px; 
+                   padding: 20px;
+               }
+</style>  
+
+<script>
+    // Recupera il nome utente dal localStorage
+ const username = localStorage.getItem('username') || 'Guest';
+ document.getElementById('username-display').textContent = username;
+ 
+ // Simula i totali (esempio statico)
+ 
+ 
+ // Mostra/nascondi il menu profilo quando clicchi sulla foto
+ const profilePic = document.getElementById('user-image');
+ const profileMenu = document.getElementById('profile-menu');
+ 
+ profilePic.addEventListener('click', function() {
+     event.stopPropagation();
+     profileMenu.style.display = profileMenu.style.display === 'block' ? 'none' : 'block';
+ });
+ 
+ // Nasconde il menu se clicchi fuori dal menu
+ document.addEventListener('click', function(event) {
+     if (!profileMenu.contains(event.target) && event.target !== profilePic) {
+         profileMenu.style.display = 'none';
+     }
+ });
+ 
+ // Logout
+ const logoutLink = document.getElementById('logout-link');
+ logoutLink.addEventListener('click', function() {
+     
+     localStorage.removeItem('username'); // Rimuove l'username dal localStorage
+     window.location.href = 'login.html'; // Reindirizza alla pagina di login
+ });
+ 
+ // Modifica profilo
+ const editProfileLink = document.getElementById('edit-profile1');
+ editProfileLink.addEventListener('click', function() {
+     window.location.href = 'aggiornamentoprofilo.html'; //reindirizza alla pagina modifica
+     
+    
+ });
+</script>

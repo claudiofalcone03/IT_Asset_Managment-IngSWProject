@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"> <!-- Aggiunta Font Awesome per le icone -->
+    <link rel="icon" href="/favicon.png" type="image/png"> <!-- Per un file .png -->
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #5B3F8D, #2B2D7E); /* Sfondo viola-blu */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: #ffffff;
+        }
+        .login-container {
+            background-color: rgba(255, 255, 255, 0.1); /* Sfondo bianco traslucido */
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            width: 320px;
+            backdrop-filter: blur(10px); /* Sfondo sfocato */
+            text-align: center; /* Centra il testo */
+        }
+        h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            letter-spacing: 1px;
+        }
+        .input-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .input-group i {
+            color: #6C63FF; /* Colore dell'icona */
+            margin-right: 10px; /* Spazio tra l'icona e l'input */
+        }
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+            transition: border-color 0.3s; /* Transizione per il colore del bordo */
+        }
+        input[type="text"].error,
+        input[type="password"].error {
+            border-color: #FF4C4C; /* Colore rosso per il bordo in caso di errore */
+        }
+        input[type="button"] {
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            margin-bottom: 10px;
+            font-size: 16px;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        input[type="button"][value="Accedi"] {
+            background-color: #6C63FF; /* Colore blu-violetto per il pulsante "Accedi" */
+        }
+        input[type="button"][value="Accedi"]:hover {
+            background-color: #5750E0; /* Colore blu-violetto scuro al passaggio del mouse */
+            transform: translateY(-2px);
+        }
+        input[type="button"][value="Riprova"] {
+            background-color: #FF4C4C; /* Colore rosso per il pulsante "Riprova" */
+        }
+        input[type="button"][value="Riprova"]:hover {
+            background-color: #E03E3E; /* Colore rosso scuro al passaggio del mouse */
+            transform: translateY(-2px);
+        }
+        .message {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #ec0b0b; /* Colore rosso per il messaggio di errore */
+        }
+        #retryButton {
+            display: none; /* Nascondi il pulsante di riprova all'inizio */
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Accesso Sicuro</h2>
+        <div class="input-group">
+            <i class="fas fa-user"></i>
+            <input type="text" id="username" placeholder="Username" required onkeypress="handleKeyPress(event)">
+        </div>
+        <div class="input-group">
+            <i class="fas fa-lock"></i>
+            <input type="password" id="password" placeholder="Password" required onkeypress="handleKeyPress(event)">
+        </div>
+
+        <input type="button" value="Accedi" onclick="checkLogin()">
+        <input type="button" id="retryButton" value="Riprova" onclick="retryLogin()">
+        
+        <div class="message" id="message"></div>
+    </div>
+
+    <script>
+        function handleKeyPress(event) {
+            // Controlla se il tasto premuto è "Enter"
+            if (event.key === 'Enter') {
+                checkLogin(); // Chiama la funzione di login
+            }
+        }
+
+        
+
+        function retryLogin() {
+            // Ripristina i campi del modulo
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+            document.getElementById('message').innerHTML = '';
+
+            // Ripristina lo stato dei campi
+            document.getElementById('username').classList.remove('error');
+            document.getElementById('password').classList.remove('error');
+
+            // Mostra nuovamente il pulsante "Accedi" e nascondi "Riprova"
+            document.querySelector('input[type="button"][value="Accedi"]').style.display = 'inline-block';
+            document.getElementById('retryButton').style.display = 'none';
+        }
+    </script>
+    <script>
+     function checkLogin() {
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+
+    // Verifica se i campi sono vuoti
+    if (!username || !password) {
+        document.getElementById('message').innerHTML = `<h1>Errore</h1><p>Compila tutti i campi</p>`;
+        return;
+    }
+
+    // Resetta gli errori precedenti
+    document.getElementById('username').classList.remove('error');
+    document.getElementById('password').classList.remove('error');
+    document.getElementById('message').innerHTML = '';
+
+    // Fai una richiesta POST al server Node.js
+    fetch('http://localhost:3000/login', {  
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username, password })
+    })
+    .then(response => {
+        return response.json();  
+    })
+    .then(data => {
+        console.log('Dati ricevuti dal server:', data); // Logga i dati restituiti
+        if (data.token) {
+            localStorage.setItem('token', data.token);  // Salva il token se esiste
+            localStorage.setItem('username', username); // Salva il nome utente
+            console.log('Login effettuato con successo');
+            window.location.href = '/politech/dashboard/dashboard.html'; // Cambia la pagina in base al ruolo
+        } else {
+            document.getElementById('message').innerHTML = `<h1>Accesso fallito</h1><p>${data.error}</p>`;
+            document.getElementById('username').classList.add('error');
+            document.getElementById('password').classList.add('error');
+            document.querySelector('input[type="button"][value="Accedi"]').style.display = 'none';
+            document.getElementById('retryButton').style.display = 'inline-block';
+        }
+    })
+    .catch(error => {
+        console.error('Errore nella richiesta:', error);
+        document.getElementById('message').innerHTML = `<h1>Errore</h1><p>Si è verificato un errore. Riprova più tardi.</p>`;
+    });
+}
+
+
+
+
+    </script>
+</body>
+</html>

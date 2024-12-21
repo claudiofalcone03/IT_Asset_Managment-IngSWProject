@@ -1,0 +1,850 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Aggiornamento Presentazione</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-default_background {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-transparentGray { background-color: rgba(227, 226, 224, 0); }
+.select-value-color-translucentGray { background-color: rgba(0, 0, 0, 0.06); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="13cc6bbf-f61f-8045-89b8-deac455bb22e" class="page sans"><header><h1 class="page-title">Aggiornamento Presentazione</h1><p class="page-description"></p><table class="properties"><tbody><tr class="property-row property-row-date"><th><span class="icon property-icon"><svg role="graphics-symbol" viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0" class="typesDate"><path d="M3.29688 14.4561H12.7031C14.1797 14.4561 14.9453 13.6904 14.9453 12.2344V3.91504C14.9453 2.45215 14.1797 1.69336 12.7031 1.69336H3.29688C1.82031 1.69336 1.05469 2.45215 1.05469 3.91504V12.2344C1.05469 13.6973 1.82031 14.4561 3.29688 14.4561ZM3.27637 13.1162C2.70898 13.1162 2.39453 12.8154 2.39453 12.2207V5.9043C2.39453 5.30273 2.70898 5.00879 3.27637 5.00879H12.71C13.2842 5.00879 13.6055 5.30273 13.6055 5.9043V12.2207C13.6055 12.8154 13.2842 13.1162 12.71 13.1162H3.27637ZM6.68066 7.38086H7.08398C7.33008 7.38086 7.41211 7.30566 7.41211 7.05957V6.66309C7.41211 6.41699 7.33008 6.3418 7.08398 6.3418H6.68066C6.44141 6.3418 6.35938 6.41699 6.35938 6.66309V7.05957C6.35938 7.30566 6.44141 7.38086 6.68066 7.38086ZM8.92285 7.38086H9.31934C9.56543 7.38086 9.64746 7.30566 9.64746 7.05957V6.66309C9.64746 6.41699 9.56543 6.3418 9.31934 6.3418H8.92285C8.67676 6.3418 8.59473 6.41699 8.59473 6.66309V7.05957C8.59473 7.30566 8.67676 7.38086 8.92285 7.38086ZM11.1582 7.38086H11.5547C11.8008 7.38086 11.8828 7.30566 11.8828 7.05957V6.66309C11.8828 6.41699 11.8008 6.3418 11.5547 6.3418H11.1582C10.9121 6.3418 10.8301 6.41699 10.8301 6.66309V7.05957C10.8301 7.30566 10.9121 7.38086 11.1582 7.38086ZM4.44531 9.58203H4.84863C5.09473 9.58203 5.17676 9.50684 5.17676 9.26074V8.86426C5.17676 8.61816 5.09473 8.54297 4.84863 8.54297H4.44531C4.20605 8.54297 4.12402 8.61816 4.12402 8.86426V9.26074C4.12402 9.50684 4.20605 9.58203 4.44531 9.58203ZM6.68066 9.58203H7.08398C7.33008 9.58203 7.41211 9.50684 7.41211 9.26074V8.86426C7.41211 8.61816 7.33008 8.54297 7.08398 8.54297H6.68066C6.44141 8.54297 6.35938 8.61816 6.35938 8.86426V9.26074C6.35938 9.50684 6.44141 9.58203 6.68066 9.58203ZM8.92285 9.58203H9.31934C9.56543 9.58203 9.64746 9.50684 9.64746 9.26074V8.86426C9.64746 8.61816 9.56543 8.54297 9.31934 8.54297H8.92285C8.67676 8.54297 8.59473 8.61816 8.59473 8.86426V9.26074C8.59473 9.50684 8.67676 9.58203 8.92285 9.58203ZM11.1582 9.58203H11.5547C11.8008 9.58203 11.8828 9.50684 11.8828 9.26074V8.86426C11.8828 8.61816 11.8008 8.54297 11.5547 8.54297H11.1582C10.9121 8.54297 10.8301 8.61816 10.8301 8.86426V9.26074C10.8301 9.50684 10.9121 9.58203 11.1582 9.58203ZM4.44531 11.7832H4.84863C5.09473 11.7832 5.17676 11.708 5.17676 11.4619V11.0654C5.17676 10.8193 5.09473 10.7441 4.84863 10.7441H4.44531C4.20605 10.7441 4.12402 10.8193 4.12402 11.0654V11.4619C4.12402 11.708 4.20605 11.7832 4.44531 11.7832ZM6.68066 11.7832H7.08398C7.33008 11.7832 7.41211 11.708 7.41211 11.4619V11.0654C7.41211 10.8193 7.33008 10.7441 7.08398 10.7441H6.68066C6.44141 10.7441 6.35938 10.8193 6.35938 11.0654V11.4619C6.35938 11.708 6.44141 11.7832 6.68066 11.7832ZM8.92285 11.7832H9.31934C9.56543 11.7832 9.64746 11.708 9.64746 11.4619V11.0654C9.64746 10.8193 9.56543 10.7441 9.31934 10.7441H8.92285C8.67676 10.7441 8.59473 10.8193 8.59473 11.0654V11.4619C8.59473 11.708 8.67676 11.7832 8.92285 11.7832Z"></path></svg></span>Data di inizio</th><td><time>@November 13, 2024</time></td></tr><tr class="property-row property-row-date"><th><span class="icon property-icon"><svg role="graphics-symbol" viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0" class="typesDate"><path d="M3.29688 14.4561H12.7031C14.1797 14.4561 14.9453 13.6904 14.9453 12.2344V3.91504C14.9453 2.45215 14.1797 1.69336 12.7031 1.69336H3.29688C1.82031 1.69336 1.05469 2.45215 1.05469 3.91504V12.2344C1.05469 13.6973 1.82031 14.4561 3.29688 14.4561ZM3.27637 13.1162C2.70898 13.1162 2.39453 12.8154 2.39453 12.2207V5.9043C2.39453 5.30273 2.70898 5.00879 3.27637 5.00879H12.71C13.2842 5.00879 13.6055 5.30273 13.6055 5.9043V12.2207C13.6055 12.8154 13.2842 13.1162 12.71 13.1162H3.27637ZM6.68066 7.38086H7.08398C7.33008 7.38086 7.41211 7.30566 7.41211 7.05957V6.66309C7.41211 6.41699 7.33008 6.3418 7.08398 6.3418H6.68066C6.44141 6.3418 6.35938 6.41699 6.35938 6.66309V7.05957C6.35938 7.30566 6.44141 7.38086 6.68066 7.38086ZM8.92285 7.38086H9.31934C9.56543 7.38086 9.64746 7.30566 9.64746 7.05957V6.66309C9.64746 6.41699 9.56543 6.3418 9.31934 6.3418H8.92285C8.67676 6.3418 8.59473 6.41699 8.59473 6.66309V7.05957C8.59473 7.30566 8.67676 7.38086 8.92285 7.38086ZM11.1582 7.38086H11.5547C11.8008 7.38086 11.8828 7.30566 11.8828 7.05957V6.66309C11.8828 6.41699 11.8008 6.3418 11.5547 6.3418H11.1582C10.9121 6.3418 10.8301 6.41699 10.8301 6.66309V7.05957C10.8301 7.30566 10.9121 7.38086 11.1582 7.38086ZM4.44531 9.58203H4.84863C5.09473 9.58203 5.17676 9.50684 5.17676 9.26074V8.86426C5.17676 8.61816 5.09473 8.54297 4.84863 8.54297H4.44531C4.20605 8.54297 4.12402 8.61816 4.12402 8.86426V9.26074C4.12402 9.50684 4.20605 9.58203 4.44531 9.58203ZM6.68066 9.58203H7.08398C7.33008 9.58203 7.41211 9.50684 7.41211 9.26074V8.86426C7.41211 8.61816 7.33008 8.54297 7.08398 8.54297H6.68066C6.44141 8.54297 6.35938 8.61816 6.35938 8.86426V9.26074C6.35938 9.50684 6.44141 9.58203 6.68066 9.58203ZM8.92285 9.58203H9.31934C9.56543 9.58203 9.64746 9.50684 9.64746 9.26074V8.86426C9.64746 8.61816 9.56543 8.54297 9.31934 8.54297H8.92285C8.67676 8.54297 8.59473 8.61816 8.59473 8.86426V9.26074C8.59473 9.50684 8.67676 9.58203 8.92285 9.58203ZM11.1582 9.58203H11.5547C11.8008 9.58203 11.8828 9.50684 11.8828 9.26074V8.86426C11.8828 8.61816 11.8008 8.54297 11.5547 8.54297H11.1582C10.9121 8.54297 10.8301 8.61816 10.8301 8.86426V9.26074C10.8301 9.50684 10.9121 9.58203 11.1582 9.58203ZM4.44531 11.7832H4.84863C5.09473 11.7832 5.17676 11.708 5.17676 11.4619V11.0654C5.17676 10.8193 5.09473 10.7441 4.84863 10.7441H4.44531C4.20605 10.7441 4.12402 10.8193 4.12402 11.0654V11.4619C4.12402 11.708 4.20605 11.7832 4.44531 11.7832ZM6.68066 11.7832H7.08398C7.33008 11.7832 7.41211 11.708 7.41211 11.4619V11.0654C7.41211 10.8193 7.33008 10.7441 7.08398 10.7441H6.68066C6.44141 10.7441 6.35938 10.8193 6.35938 11.0654V11.4619C6.35938 11.708 6.44141 11.7832 6.68066 11.7832ZM8.92285 11.7832H9.31934C9.56543 11.7832 9.64746 11.708 9.64746 11.4619V11.0654C9.64746 10.8193 9.56543 10.7441 9.31934 10.7441H8.92285C8.67676 10.7441 8.59473 10.8193 8.59473 11.0654V11.4619C8.59473 11.708 8.67676 11.7832 8.92285 11.7832Z"></path></svg></span>Data di scadenza</th><td><time>@November 28, 2024</time></td></tr><tr class="property-row property-row-formula"><th><span class="icon property-icon"><svg role="graphics-symbol" viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0" class="typesFormula"><path d="M5.04688 14.3604H11.2744C11.7324 14.3604 12.0537 14.0801 12.0537 13.6494C12.0537 13.2119 11.7324 12.9248 11.2744 12.9248H5.81934V12.8564L9.30566 8.82324C9.54492 8.57031 9.6748 8.29688 9.6748 8.0166C9.6748 7.73633 9.54492 7.45605 9.29883 7.20996L5.81934 3.2793V3.21094H11.2812C11.7393 3.21094 12.0537 2.92383 12.0537 2.48633C12.0537 2.05566 11.7393 1.77539 11.2812 1.77539H5.05371C4.34277 1.77539 3.95312 2.26758 3.95312 2.81445C3.95312 3.12207 4.07617 3.44336 4.33594 3.69629L8.15039 7.96875V8.05078L4.3291 12.4395C4.06934 12.6924 3.94629 13.0137 3.94629 13.3213C3.94629 13.8682 4.33594 14.3604 5.04688 14.3604Z"></path></svg></span>Giorni rimanenti</th><td>14</td></tr><tr class="property-row property-row-number"><th><span class="icon property-icon"><svg role="graphics-symbol" viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0" class="typesNumber"><path d="M2.4834 10.9902H4.33594L3.75488 13.8887C3.74121 13.9639 3.72754 14.0664 3.72754 14.1416C3.72754 14.5381 3.99414 14.7637 4.39746 14.7637C4.81445 14.7637 5.09473 14.5449 5.18359 14.1143L5.80566 10.9902H8.79297L8.21191 13.8887C8.19824 13.9639 8.18457 14.0664 8.18457 14.1416C8.18457 14.5381 8.45117 14.7637 8.85449 14.7637C9.27148 14.7637 9.55176 14.5449 9.63379 14.1143L10.2627 10.9902H12.4502C12.9287 10.9902 13.2432 10.6758 13.2432 10.2109C13.2432 9.8418 12.9902 9.56836 12.6006 9.56836H10.5498L11.2129 6.28711H13.3662C13.8379 6.28711 14.1523 5.96582 14.1523 5.50098C14.1523 5.13184 13.9062 4.8584 13.5098 4.8584H11.5L12.0195 2.27441C12.0264 2.21973 12.0469 2.11035 12.0469 2.01465C12.0469 1.625 11.7666 1.39258 11.3633 1.39258C10.9053 1.39258 10.6797 1.63867 10.5977 2.05566L10.0303 4.8584H7.04297L7.5625 2.27441C7.57617 2.21973 7.58984 2.11035 7.58984 2.01465C7.58984 1.625 7.30957 1.39258 6.91309 1.39258C6.44824 1.39258 6.21582 1.63867 6.13379 2.05566L5.57324 4.8584H3.54297C3.06445 4.8584 2.75 5.18652 2.75 5.65137C2.75 6.03418 3.00293 6.28711 3.39258 6.28711H5.28613L4.62305 9.56836H2.63379C2.15527 9.56836 1.84082 9.89648 1.84082 10.3613C1.84082 10.7373 2.09375 10.9902 2.4834 10.9902ZM6.09277 9.56836L6.75586 6.28711H9.74316L9.08008 9.56836H6.09277Z"></path></svg></span>Number</th><td>2</td></tr><tr class="property-row property-row-select"><th><span class="icon property-icon"><svg role="graphics-symbol" viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0" class="typesSelect"><path d="M8 15.126C11.8623 15.126 15.0615 11.9336 15.0615 8.06445C15.0615 4.20215 11.8623 1.00293 7.99316 1.00293C4.13086 1.00293 0.938477 4.20215 0.938477 8.06445C0.938477 11.9336 4.1377 15.126 8 15.126ZM8 13.7383C4.85547 13.7383 2.33301 11.209 2.33301 8.06445C2.33301 4.91992 4.84863 2.39746 7.99316 2.39746C11.1377 2.39746 13.6738 4.91992 13.6738 8.06445C13.6738 11.209 11.1445 13.7383 8 13.7383ZM7.62402 10.6348C7.79492 10.915 8.20508 10.9287 8.37598 10.6348L10.666 6.73145C10.8574 6.41016 10.7002 6.04102 10.3652 6.04102H5.62793C5.29297 6.04102 5.14941 6.43066 5.32031 6.73145L7.62402 10.6348Z"></path></svg></span>Priority Level</th><td><span class="selected-value select-value-color-red">🚨 High</span></td></tr><tr class="property-row property-row-status"><th><span class="icon property-icon"><svg role="graphics-symbol" viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0" class="typesStatus"><path d="M8.75488 1.02344C8.75488 0.613281 8.41309 0.264648 8.00293 0.264648C7.59277 0.264648 7.25098 0.613281 7.25098 1.02344V3.11523C7.25098 3.51855 7.59277 3.86719 8.00293 3.86719C8.41309 3.86719 8.75488 3.51855 8.75488 3.11523V1.02344ZM3.91504 5.0293C4.20215 5.31641 4.69434 5.32324 4.97461 5.03613C5.26855 4.74902 5.26855 4.25684 4.98145 3.96973L3.53906 2.52051C3.25195 2.2334 2.7666 2.21973 2.47949 2.50684C2.19238 2.79395 2.18555 3.28613 2.47266 3.57324L3.91504 5.0293ZM10.9629 4.01758C10.6826 4.30469 10.6826 4.79688 10.9697 5.08398C11.2568 5.37109 11.749 5.36426 12.0361 5.07715L13.4854 3.62793C13.7725 3.34082 13.7725 2.84863 13.4785 2.55469C13.1982 2.27441 12.7061 2.27441 12.4189 2.56152L10.9629 4.01758ZM15.0234 8.78906C15.4336 8.78906 15.7822 8.44727 15.7822 8.03711C15.7822 7.62695 15.4336 7.28516 15.0234 7.28516H12.9385C12.5283 7.28516 12.1797 7.62695 12.1797 8.03711C12.1797 8.44727 12.5283 8.78906 12.9385 8.78906H15.0234ZM0.975586 7.28516C0.56543 7.28516 0.223633 7.62695 0.223633 8.03711C0.223633 8.44727 0.56543 8.78906 0.975586 8.78906H3.07422C3.48438 8.78906 3.83301 8.44727 3.83301 8.03711C3.83301 7.62695 3.48438 7.28516 3.07422 7.28516H0.975586ZM12.0361 10.9902C11.749 10.71 11.2568 10.71 10.9629 10.9971C10.6826 11.2842 10.6826 11.7764 10.9697 12.0635L12.4258 13.5127C12.7129 13.7998 13.2051 13.793 13.4922 13.5059C13.7793 13.2256 13.7725 12.7266 13.4854 12.4395L12.0361 10.9902ZM2.52051 12.4395C2.22656 12.7266 2.22656 13.2188 2.50684 13.5059C2.79395 13.793 3.28613 13.7998 3.57324 13.5127L5.02246 12.0703C5.31641 11.7832 5.31641 11.291 5.03613 11.0039C4.74902 10.7168 4.25684 10.71 3.96973 10.9971L2.52051 12.4395ZM8.75488 12.9658C8.75488 12.5557 8.41309 12.207 8.00293 12.207C7.59277 12.207 7.25098 12.5557 7.25098 12.9658V15.0576C7.25098 15.4609 7.59277 15.8096 8.00293 15.8096C8.41309 15.8096 8.75488 15.4609 8.75488 15.0576V12.9658Z"></path></svg></span>Status</th><td><span class="status-value select-value-color-blue"><div class="status-dot status-dot-color-blue"></div>In progress</span></td></tr></tbody></table></header><div class="page-body"><ul id="13dc6bbf-f61f-80d6-af2d-fb54e38f5341" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Analisi dei FURPS+</span><div class="indented"></div></li></ul><ul id="13dc6bbf-f61f-807f-ab1c-c56ea12ade50" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Diagramma delle classi</span><div class="indented"></div></li></ul><ul id="13dc6bbf-f61f-8058-b8cd-ea8a18f566ce" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Diagramma dei casi d’uso</span><div class="indented"></div></li></ul><ul id="13dc6bbf-f61f-809b-8106-e91b8183aeb3" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Diagramma delle sequenze</span><div class="indented"></div></li></ul><ul id="13dc6bbf-f61f-801d-a808-c924701766cf" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Architettura</span><div class="indented"></div></li></ul><p id="13dc6bbf-f61f-8013-a101-f0acd278fc7b" class="">
+</p><details open=""><summary style="font-weight:600;font-size:1.875em;line-height:1.3;margin:0">Analisi dei FURPS+</summary><div class="indented"><p id="13dc6bbf-f61f-8005-aa1f-d0c338f14797" class="">FURPS+ è un modello per classificare i requisiti software e include i seguenti aspetti e le relative sottocategorie:</p><h3 id="13dc6bbf-f61f-8022-9418-c3fbf8fef0b2" class="">1. Funzionalità:</h3><ul id="13dc6bbf-f61f-805f-8ac8-fa7643249f64" class="bulleted-list"><li style="list-style-type:disc"><strong>Gestione degli asset:</strong>  Il software web app deve permettere di <mark class="highlight-red">aggiungere</mark>, <mark class="highlight-red">modificare</mark>, <mark class="highlight-red">eliminare</mark> e visualizzare <mark class="highlight-red">asset IT</mark> (PC, stampanti, periferiche..), ma anche di <mark class="highlight-red">licenze</mark>, <mark class="highlight-red">sedi</mark> e <mark class="highlight-red">dipendenti</mark>.</li></ul><ul id="13dc6bbf-f61f-80e8-8ce1-ff6388e3f0a1" class="bulleted-list"><li style="list-style-type:disc"><strong>Tracciamento e cronologia </strong>: Il sistema deve <mark class="highlight-red">mantenere</mark> uno <mark class="highlight-red">storico</mark> delle <mark class="highlight-red">modifiche</mark> per ogni asset.</li></ul><ul id="13dc6bbf-f61f-80ca-8a9a-cf66ad1ea7cb" class="bulleted-list"><li style="list-style-type:disc"><strong>Notifiche</strong>: Il software deve inviare <mark class="highlight-red">notifiche</mark> per asset che richiedono manutenzione, sono prossimi alla <mark class="highlight-red">scadenza</mark> di garanzia o per le licenze prossime alla scadenza</li></ul><ul id="13dc6bbf-f61f-8050-a2a4-eb21fcc43bcb" class="bulleted-list"><li style="list-style-type:disc"><strong>Sicurezza e autenticazione: </strong>Accesso riservato tramite autenticazione (<mark class="highlight-red">login con credenziali</mark>) e gestione dei permessi (<mark class="highlight-red">admin e utenti base</mark>).<ul id="13dc6bbf-f61f-80af-a315-ccc835d1a5d8" class="bulleted-list"><li style="list-style-type:circle">Prossimamente: autenticazione a due fattori e/o aggiunta di passkey</li></ul></li></ul><ul id="13dc6bbf-f61f-80ac-943b-c03349ce7177" class="bulleted-list"><li style="list-style-type:disc"><strong>Esportazione e importazione</strong>: Possibilità di <mark class="highlight-red">esportare</mark>/<mark class="highlight-red">importare</mark> report degli asset in formati <mark class="highlight-red">CSV</mark> o PDF.</li></ul><h3 id="13dc6bbf-f61f-804e-bf65-c19ffcbdf8af" class="">2. Usabilità: </h3><ul id="13dc6bbf-f61f-8076-9fdf-cb8ac627df20" class="bulleted-list"><li style="list-style-type:disc"><strong>Interfaccia utente intuitiva</strong>: L’app deve avere un’<mark class="highlight-red">interfaccia chiara e facile</mark> da navigare</li></ul><ul id="13dc6bbf-f61f-80b8-a3dd-d34c6ea99132" class="bulleted-list"><li style="list-style-type:disc"><strong>Documentazione</strong>: Manuale utente integrato e <mark class="highlight-red">guida rapida all’uso</mark> del sistema.</li></ul><h3 id="13dc6bbf-f61f-8066-b1ed-d717a152dc39" class="">3. Affidabilità:</h3><ul id="13dc6bbf-f61f-80c7-9684-ec90e022cdaa" class="bulleted-list"><li style="list-style-type:disc"><strong>Disponibilità continua</strong>: Il sistema deve essere disponibile 99,9% del tempo per garantire <mark class="highlight-red">accesso continuo</mark>.</li></ul><ul id="13dc6bbf-f61f-8046-9b88-d6a039541a6c" class="bulleted-list"><li style="list-style-type:disc"><strong>Backup automatici</strong>: Creazione di <mark class="highlight-red">backup</mark> regolari del database per prevenire perdita di dati.</li></ul><ul id="13dc6bbf-f61f-80e2-91a9-c8d541b27525" class="bulleted-list"><li style="list-style-type:disc"><strong>Tolleranza agli errori</strong>: Il software deve <mark class="highlight-red">gestire input non validi</mark> senza crashare e fornire messaggi di errore utili.</li></ul><h3 id="13dc6bbf-f61f-80ee-b5a9-f0c906ef9bf7" class="">4. Performace</h3><ul id="13dc6bbf-f61f-807b-9f44-d1d4f0af42a5" class="bulleted-list"><li style="list-style-type:disc"><strong>Tempo di risposta: </strong>ogni operazione deve avere un <mark class="highlight-red">tempo</mark> di <mark class="highlight-red">risposta</mark> molto <mark class="highlight-red">basso</mark> (&lt;1 sec)ì</li></ul><ul id="13dc6bbf-f61f-8044-9712-df352bb567a6" class="bulleted-list"><li style="list-style-type:disc"><strong>Efficienza del database</strong>: Utilizzo di MySQL ottimizzato con indici per <mark class="highlight-red">query</mark> <mark class="highlight-red">veloci</mark>.</li></ul><ul id="13dc6bbf-f61f-8061-999e-cac555c11a67" class="bulleted-list"><li style="list-style-type:disc"><strong>Supporto a più utenti simultanei</strong>: Il sistema deve supportare la <mark class="highlight-red">multi-utenza contemporanea</mark> senza calo  delle prestazioni.</li></ul><h3 id="13dc6bbf-f61f-800d-b9ef-e6d9ec3124a7" class="">5. Manutenibilità</h3><ul id="13dc6bbf-f61f-8063-a2a0-ca9cf9b0045b" class="bulleted-list"><li style="list-style-type:disc"><strong>Compatibilità</strong>: <mark class="highlight-red">Compatibile</mark> con i principali <mark class="highlight-red">browser</mark> (Chrome, Firefox, Safari)<ul id="13dc6bbf-f61f-80c2-867c-c37720a3378c" class="bulleted-list"><li style="list-style-type:circle">Prossimamente: dispositivi mobile</li></ul></li></ul><ul id="13dc6bbf-f61f-8038-a138-d4e2cdb1f7a3" class="bulleted-list"><li style="list-style-type:disc"><strong>Estensibilità</strong>: L’app deve essere progettata per <mark class="highlight-red">facilitare</mark> <mark class="highlight-red">l’aggiunta</mark> di nuove <mark class="highlight-red">funzionalità</mark> (es. integrazione con servizi di terze parti).</li></ul><h2 id="13dc6bbf-f61f-8006-adcc-f5ad6566e5ea" class="">+ Altri requisiti</h2><ul id="13dc6bbf-f61f-8099-94d4-ce6a29fab662" class="bulleted-list"><li style="list-style-type:disc"><strong>Design constraints</strong>: Utilizzo di HTML, CSS e Node.js per il frontend e backend, e MySQL per il database.</li></ul><ul id="13dc6bbf-f61f-801c-bf10-e7f06f4e589c" class="bulleted-list"><li style="list-style-type:disc"><strong>Implementation requirements</strong>: Scrittura del codice su Visual Studio Code e gestione del database tramite DBeaver.</li></ul><ul id="13dc6bbf-f61f-8078-a870-d4c4427d3cd2" class="bulleted-list"><li style="list-style-type:disc"><strong>Interface requirements</strong>: <mark class="highlight-red">API</mark>  per la <mark class="highlight-red">comunicazione</mark> tra <mark class="highlight-red">frontend</mark> e <mark class="highlight-red">backend</mark>.</li></ul><ul id="13dc6bbf-f61f-80dd-a770-c96349730420" class="bulleted-list"><li style="list-style-type:disc"><strong>Physical requirements</strong>: La macchina sulla quale gira il software 8 GB di RAM e un processore dual-core per gestire il carico</li></ul></div></details><details open=""><summary style="font-weight:600;font-size:1.875em;line-height:1.3;margin:0">Diagramma delle classi</summary><div class="indented"><p id="13dc6bbf-f61f-807e-8006-f584fe25dffe" class="">Alcune modifiche sono basate sull’incoerenza di nomi. Mi sono basato sul mio diagramma ER che è un po’ più completo</p><h3 id="13dc6bbf-f61f-80e0-8c91-d00a743a49fc" class="">Modifiche da effettuare sul  diagramma delle classi</h3><ul id="13dc6bbf-f61f-8039-9c51-d5824ea19021" class="bulleted-list"><li style="list-style-type:disc">Coerenza dei nomi<ul id="13dc6bbf-f61f-80a8-a8d8-db7c63eeff87" class="bulleted-list"><li style="list-style-type:circle">aggiungere consumabili </li></ul><ul id="13dc6bbf-f61f-801f-a527-f3506b25a1a1" class="bulleted-list"><li style="list-style-type:circle">aggiungere componenti</li></ul></li></ul><ul id="13dc6bbf-f61f-8058-8bb2-ed7e24f0ed74" class="bulleted-list"><li style="list-style-type:disc">Aggiungere sedi</li></ul><ul id="13dc6bbf-f61f-8091-b60d-d75f6db58e70" class="toggle"><li><details open=""><summary>Anteprima generata da claude.ai</summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="13dc6bbf-f61f-803a-910d-d9becef4a972" class="code"><code class="language-Mermaid">classDiagram
+    class Utente {
+        +id: Integer
+        +nome: String
+        +cognome: String
+        +email: String
+        +username: String
+        +password: String
+        +login()
+        +logout()
+        +visualizzaDashboard()
+        +validaPassword()
+    }
+
+    class Dashboard {
+        +visualizzaGrafici()
+        +passaAPremium()
+        +visualizzaAzioniRecenti()
+        +visualizzaSedi()
+    }
+
+    class Abbonamento {
+        +id: Integer
+        +tipo: String
+        +dataInizio: Date
+        +dataFine: Date
+        +attiva()
+        +scaduto()
+    }
+
+    class Pagamento {
+        +id: Integer
+        +importo: Float
+        +data: Date
+        +stato: String
+        +descrizione: String
+        +effettuaPagamento()
+        +visualizzaDettagli()
+    }
+
+    class Consulenza {
+        +id: Integer
+        +tipo: String
+        +descrizione: String
+        +dataRichiesta: Date
+    }
+
+    class Asset {
+        &lt;&lt;abstract&gt;&gt;
+        +id: Integer
+        +nomeAsset: String
+        +deviceImage: String
+        +modello: String
+        +categoria: String
+        +status: String
+        +dipendenteId: Integer
+        +costoAcquisto: Float
+        +valoreAttuale: Float
+        +dataAcquisto: Date
+        +add()
+        +remove()
+        +update()
+    }
+
+    class Dipendente {
+        +id: Integer
+        +nome: String
+        +cognome: String
+        +email: String
+        +username: String
+        +reparto: String
+        +ruolo: String
+        +grado: String
+    }
+
+    class Accessori {
+        +id: Integer
+        +immagine: String
+        +nome: String
+        +categoria: String
+        +modello: String
+        +quantitaTotale: Integer
+        +quantitaDisponibile: Integer
+        +dipendenteId: Integer
+    }
+
+    class Componenti {
+        +id: Integer
+        +nome: String
+        +seriale: String
+        +categoria: String
+        +modello: String
+        +quantitaTotale: Integer
+        +quantitaDisponibile: Integer
+        +dataAcquisto: Date
+        +costoAcquisto: Float
+    }
+
+    class Consumabili {
+        +id: Integer
+        +nome: String
+        +categoria: String
+        +modello: String
+        +quantitaTotale: Integer
+        +quantitaRimanenti: Integer
+        +numeroOrdine: String
+        +dataAcquisto: Date
+        +costoAcquisto: Float
+    }
+
+    class Licenze {
+        +id: Integer
+        +nomeLicenza: String
+        +productKey: String
+        +dataScadenza: Date
+        +dataAcquisto: Date
+        +emailLegata: String
+        +azienda: String
+        +quantitaTotale: Integer
+        +quantitaDisponibile: Integer
+    }
+
+    Utente &quot;1&quot; -- &quot;1&quot; Dashboard
+    Utente &quot;1&quot; -- &quot;*&quot; Consulenza
+    Utente &quot;1&quot; -- &quot;*&quot; Abbonamento
+    Abbonamento &quot;1&quot; -- &quot;*&quot; Pagamento
+    Asset &lt;|-- Componenti
+    Asset &lt;|-- Consumabili
+    Asset &lt;|-- Licenze
+    Dipendente &quot;1&quot; -- &quot;*&quot; Asset
+    Asset &quot;1&quot; -- &quot;*&quot; Accessori</code></pre></details></li></ul><h2 id="13dc6bbf-f61f-8048-8ac4-d412c9b489b2" class="">Modifiche da effettuare sul diagramma ER</h2><ul id="13dc6bbf-f61f-8047-a650-c219f093bd32" class="bulleted-list"><li style="list-style-type:disc">Aggiungere tabella utenti<ul id="13dc6bbf-f61f-80e7-93ec-ea8ad942c47a" class="bulleted-list"><li style="list-style-type:circle">Aggiungere tipo di abbonamento e scadenza ad utente</li></ul><ul id="13dc6bbf-f61f-80f5-a473-ebbe2b4572a8" class="bulleted-list"><li style="list-style-type:circle">Aggiungere classe abbonamento<ul id="13dc6bbf-f61f-80d7-bc4d-ff0bbd91b9c3" class="bulleted-list"><li style="list-style-type:square">Collegare utente ad abbonamento</li></ul></li></ul></li></ul><ul id="13dc6bbf-f61f-8049-a244-d6847a9c670f" class="bulleted-list"><li style="list-style-type:disc">Aggiungere sedi</li></ul><ul id="13dc6bbf-f61f-80bc-a38d-cc629ad7f80d" class="bulleted-list"><li style="list-style-type:disc"></li></ul></div></details><details open=""><summary style="font-weight:600;font-size:1.875em;line-height:1.3;margin:0">Diagramma dei casi d’uso</summary><div class="indented"><h2 id="13dc6bbf-f61f-80d3-804b-c6e0cde0d051" class="">Modifiche da effettuare</h2><ul id="13dc6bbf-f61f-809b-9d50-eb0d2daaab50" class="bulleted-list"><li style="list-style-type:disc">Dopo richiedi consulenza ( o prima ) forse si potrebbe collegare ad una “fase di registrazione”</li></ul><ul id="13dc6bbf-f61f-8085-8a07-cbc000ef3459" class="bulleted-list"><li style="list-style-type:disc">Aggiungere un caso d’uso per la<strong> Gestione del Profilo</strong> dove l’utente può aggiornare i propri dati personali, cambiare la password o configurare le preferenze.</li></ul><p id="13dc6bbf-f61f-80fe-87eb-ccc26e525550" class="">
+</p><p id="13dc6bbf-f61f-80db-9c27-c80e5f216878" class="">
+</p><p id="13dc6bbf-f61f-80b2-9b0f-c2842f7f0ce9" class="">
+</p></div></details><details open=""><summary style="font-weight:600;font-size:1.875em;line-height:1.3;margin:0">Diagramma delle sequenze</summary><div class="indented"><p id="13dc6bbf-f61f-802a-a2ff-dbb5f4995490" class=""><strong>Attori</strong>:</p><ul id="13dc6bbf-f61f-8065-b841-f1498ec9583e" class="bulleted-list"><li style="list-style-type:disc">Utente</li></ul><ul id="13dc6bbf-f61f-8059-93e5-f0f30841dfe0" class="bulleted-list"><li style="list-style-type:disc">Browser (client)</li></ul><ul id="13dc6bbf-f61f-80f9-94e5-f44e66118ac4" class="bulleted-list"><li style="list-style-type:disc">Server Node.js</li></ul><ul id="13dc6bbf-f61f-80ec-983d-f3bd478f1353" class="bulleted-list"><li style="list-style-type:disc">Database MySQL</li></ul><p id="13dc6bbf-f61f-80de-937c-d423b3d94a62" class=""><strong>Flusso Completo</strong>:</p><ol type="1" id="13dc6bbf-f61f-804d-bd25-c4745a52f7d5" class="numbered-list" start="1"><li><strong>Registrazione</strong>: L’utente invia i dati di registrazione, che vengono salvati nel database.</li></ol><ol type="1" id="13dc6bbf-f61f-8002-8763-d990c3615655" class="numbered-list" start="2"><li><strong>Login</strong>: L’utente si autentica e riceve un token di sessione.</li></ol><ol type="1" id="13dc6bbf-f61f-80f2-9ff1-ddf7cdb28e9c" class="numbered-list" start="3"><li><strong>Visualizzazione della Dashboard</strong>: Il client invia una richiesta per caricare la dashboard,e il server risponde con i dati aggregati.</li></ol><ol type="1" id="13dc6bbf-f61f-80a6-bfd6-f59cb396319d" class="numbered-list" start="4"><li><strong>Visualizzazione degli Asset</strong>: Il client richiede la lista completa degli asset.</li></ol><ol type="1" id="13dc6bbf-f61f-808f-bebe-f6fdbdcc9ff8" class="numbered-list" start="5"><li><strong>Ricerca di Asset</strong>: Il client invia una query di ricerca avanzata.</li></ol><ol type="1" id="13dc6bbf-f61f-802c-a2e3-f8d3cd10bf53" class="numbered-list" start="6"><li><strong>Aggiunta di un Asset</strong>: L’utente invia i dati di un nuovo asset.</li></ol><ol type="1" id="13dc6bbf-f61f-8030-a613-e8a1ea6e88c7" class="numbered-list" start="7"><li><strong>Modifica di un Asset</strong>: L’utente modifica i dati di un asset esistente.</li></ol><ol type="1" id="13dc6bbf-f61f-8061-98ba-db130639bea4" class="numbered-list" start="8"><li><strong>Eliminazione di un Asset</strong>: L’utente rimuove un asset dal database.</li></ol><ol type="1" id="13dc6bbf-f61f-803c-9170-f846ac43b4f1" class="numbered-list" start="9"><li><strong>Esportazione Dati</strong>: L’utente richiede di esportare i dati in formato CSV.</li></ol><ol type="1" id="13dc6bbf-f61f-808f-93ef-ed3c3c3ae9e8" class="numbered-list" start="10"><li><strong>Logout</strong>: L’utente termina la sessione.</li></ol><ul id="13dc6bbf-f61f-8085-8023-e76f94a7fea2" class="toggle"><li><details open=""><summary>Codice .puml</summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="13dc6bbf-f61f-800d-bd26-c0f1caf2905d" class="code"><code class="language-Visual Basic">@startuml
+actor &quot;Capo (Admin)&quot; as Capo
+actor &quot;Ospite&quot; as Ospite
+actor Sistema
+entity &quot;Database&quot; as DB
+
+Capo -&gt; Sistema: Effettua registrazione (Associa sedi)
+Sistema -&gt; DB: Salva utente, sedi, ruolo
+Ospite -&gt; Sistema: Effettua registrazione (Visualizzazione asset)
+Sistema -&gt; DB: Salva utente, ruolo
+Capo -&gt; Sistema: Effettua login
+Ospite -&gt; Sistema: Effettua login
+Sistema -&gt; DB: Verifica credenziali, ruolo
+Sistema -&gt; Capo: Risponde con token di sessione
+Sistema -&gt; Ospite: Risponde con token di sessione
+
+Capo -&gt; Sistema: Visualizza tutte le sedi
+Sistema -&gt; DB: Recupera sedi gestite dal Capo
+Sistema -&gt; Capo: Mostra sedi
+Capo -&gt; Sistema: Gestisce asset (aggiungi, modifica, elimina)
+Sistema -&gt; DB: Aggiungi/Modifica/Elimina asset (comuni a tutte le sedi)
+Capo -&gt; Sistema: Esporta dati (CSV)
+Sistema -&gt; DB: Recupera dati
+Sistema -&gt; Capo: Fornisce file CSV
+
+Ospite -&gt; Sistema: Visualizza asset
+Sistema -&gt; DB: Recupera asset (comuni a tutte le sedi)
+Sistema -&gt; Ospite: Mostra asset
+Ospite -&gt; Sistema: Logout
+Capo -&gt; Sistema: Logout
+Sistema -&gt; DB: Termina sessione
+
+@enduml</code></pre></details></li></ul></div></details><figure id="13dc6bbf-f61f-805a-beb1-d3055dbee995" class="image"><a href="Aggiornamento%20Presentazione%2013cc6bbff61f804589b8deac455bb22e/image.png"><img style="width:500px" src="Aggiornamento%20Presentazione%2013cc6bbff61f804589b8deac455bb22e/image.png"/></a></figure><details open=""><summary style="font-weight:600;font-size:1.875em;line-height:1.3;margin:0">Architettura</summary><div class="indented"><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0"><strong>1. Architettura Generale</strong></summary><div class="indented"><p id="13dc6bbf-f61f-807a-901c-c5eb083f851c" class="">L’architettura sarà di tipo <strong>client-server</strong> con il server gestito da <strong>Node.js</strong> e il database MySQL per memorizzare i dati. L’interfaccia utente sarà costituita da <strong>HTML</strong> e <strong>CSS</strong>, mentre <strong>JavaScript</strong> (lato client) o <strong>Node.js</strong> (lato server) si occuperanno della logica.</p><p id="13dc6bbf-f61f-809e-921d-d515d5ba9183" class=""><strong>Componenti Principali:</strong></p><ul id="13dc6bbf-f61f-80ec-866a-ff4bd488938e" class="bulleted-list"><li style="list-style-type:disc"><strong>Front-End (Client)</strong>: Responsabile della visualizzazione e interazione dell’utente.</li></ul><ul id="13dc6bbf-f61f-805d-9cc8-dc27e3f8a183" class="bulleted-list"><li style="list-style-type:disc">Tecnologie: <strong>HTML</strong>, <strong>CSS</strong>, <strong>JavaScript</strong> (per interazione client-side).</li></ul><ul id="13dc6bbf-f61f-805b-a341-f8fb6b8d7487" class="bulleted-list"><li style="list-style-type:disc"><strong>Back-End (Server)</strong>: Il server che gestisce le richieste dal front-end, interagisce con il database e fornisce i dati in formato JSON.</li></ul><ul id="13dc6bbf-f61f-8051-9a35-f8adf07b3fc2" class="bulleted-list"><li style="list-style-type:disc">Tecnologie: <strong>Node.js</strong></li></ul><ul id="13dc6bbf-f61f-80ef-928c-fe56cb32401a" class="bulleted-list"><li style="list-style-type:disc"><strong>Database</strong>: Memorizza gli asset, gli utenti, le sedi e le sottoscrizioni.</li></ul><ul id="13dc6bbf-f61f-8006-b727-c9d8e38f154d" class="bulleted-list"><li style="list-style-type:disc"><strong>Tecnologie</strong>: <strong>MySQL</strong> (database relazionale per archiviare i dati).</li></ul></div></details><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0">2. <strong>Flusso di Dati e Comunicazione</strong></summary><div class="indented"><ul id="13dc6bbf-f61f-808b-b429-cbb0308de81a" class="bulleted-list"><li style="list-style-type:disc"><strong>Front-End → Back-End</strong>: Il front-end invia richieste HTTP (GET, POST, PUT, DELETE) al back-end, che elabora la richiesta e risponde con i dati in formato JSON.</li></ul><ul id="13dc6bbf-f61f-80c2-b928-f84ae8eb3d01" class="bulleted-list"><li style="list-style-type:disc"><strong>Back-End → Database</strong>: Il back-end interagisce con MySQL per recuperare, inserire e aggiornare i dati sugli asset, gli utenti e le sedi.</li></ul></div></details><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0">3. <strong>Struttura del Database</strong></summary><div class="indented"><figure id="13dc6bbf-f61f-808e-9f4e-fea92ae932ea" class="image"><a href="Aggiornamento%20Presentazione%2013cc6bbff61f804589b8deac455bb22e/image%201.png"><img style="width:651.9921875px" src="Aggiornamento%20Presentazione%2013cc6bbff61f804589b8deac455bb22e/image%201.png"/></a></figure></div></details><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0"><strong>4. Back-End con Node.js e Express</strong></summary><div class="indented"><p id="13dc6bbf-f61f-804d-a63a-fd42379ea012" class="">Il back-end gestisce le richieste HTTP dal front-end, interagendo con il database MySQL per recuperare e inviare i dati.</p></div></details><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0">5. <strong>Front-End (HTML, CSS, JavaScript)</strong></summary><div class="indented"><p id="13dc6bbf-f61f-80e8-a14a-fd27959d0e23" class="">Il front-end può essere una pagina statica HTML che fa richieste al back-end utilizzando JavaScript (via Fetch API o Axios). Ad esempio:</p><p id="13dc6bbf-f61f-8046-9f69-d7ea06e20ff0" class="">1.	<strong>HTML</strong>: La struttura della tua pagina (dashboard, form per aggiungere asset, ecc.)</p><p id="13dc6bbf-f61f-8082-96fc-e88fce88dbae" class="">2.	<strong>CSS</strong>: Stilizzazione per migliorare l’aspetto visivo.</p><p id="13dc6bbf-f61f-80fb-9209-e7e98b832498" class="">3.	<strong>JavaScript</strong>: Gestione delle richieste HTTP al server per ottenere o inviare dati.</p></div></details></div></details></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

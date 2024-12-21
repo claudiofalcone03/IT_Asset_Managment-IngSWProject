@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="it">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Accessori</title>
+        <link rel="stylesheet" href="/politech/css/style1.css">
+        <script src="/politech/script.js" defer></script>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+        <link rel="icon" href="/favicon.png" type="image/png">
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css">
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.11.7/dayjs.min.js"></script>
+    </head>
+
+    <!-- Barra superiore OK-->
+    <header> 
+        <body>
+        <!-- Elemento cliccabile OK -->
+            <div class="logo">
+                <a href="/politech/basic/basic.html">
+                    <img src="/politech/images/sfondodash.png" alt="logo">
+                </a>
+            </div>
+        <!--Barra di ricerca OK -->   
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Cerca...">
+                <ul class="search-results" id="resultsList"></ul> <!-- Menu a tendina -->
+            </div>
+        <!--Icona utente OK-->
+            <div class="user-info">
+                <img src="/politech/images/084a1a23-1c56-4c8b-a301-702e66eb5c6d.png" alt="Foto Utente" id="user-image" style="cursor: pointer;">
+                <span style="font-family: 'Montserrat', sans-serif" id="username-display">Nome Utente</span>
+                <div class="dropdown-menu" id="user-dropdown">
+                    <ul>
+                        
+                        <li id="logout">Logout</li>
+                    </ul>
+                </div>
+                
+                <div id="profile-menu" class="profile-menu">
+                    <ul>
+                       
+                        <li><a href="#" id="logout-link">Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+    </header>
+
+    <!--Funzionalità barra superiore OK-->
+    <script>
+        // Recupera il nome utente dal localStorage
+     const username = localStorage.getItem('username') || 'Guest';
+     document.getElementById('username-display').textContent = username;
+     
+     // Simula i totali (esempio statico)
+     
+     
+     // Mostra/nascondi il menu profilo quando clicchi sulla foto
+     const profilePic = document.getElementById('user-image');
+     const profileMenu = document.getElementById('profile-menu');
+     
+     profilePic.addEventListener('click', function() {
+         event.stopPropagation();
+         profileMenu.style.display = profileMenu.style.display === 'block' ? 'none' : 'block';
+     });
+     
+     // Nasconde il menu se clicchi fuori dal menu
+     document.addEventListener('click', function(event) {
+         if (!profileMenu.contains(event.target) && event.target !== profilePic) {
+             profileMenu.style.display = 'none';
+         }
+     });
+     
+     // Logout
+     const logoutLink = document.getElementById('logout-link');
+     logoutLink.addEventListener('click', function() {
+         
+         localStorage.removeItem('username'); // Rimuove l'username dal localStorage
+         window.location.href = 'login.html'; // Reindirizza alla pagina di login
+     });
+     
+     // Modifica profilo
+     const editProfileLink = document.getElementById('edit-profile1');
+     editProfileLink.addEventListener('click', function() {
+         window.location.href = 'aggiornamentoprofilo.html'; //reindirizza alla pagina modifica
+         
+        
+     });
+    </script>
+
+    <!--Funzionalità barra di ricerca superiore OK-->
+    <script>
+        // Simula l'indice delle pagine da cercare
+        const sitePages = [
+            { title: "Asset", url: "/politech/asset/asset.html", content: "asset" },
+            { title: "Dashboard", url: "/politech/index.html", content: "Informazioni generali" },
+            { title: "Servizi", url: "/politech/services/services.html", content: "I nostri servizi includono..." },
+            { title: "Contatti", url: "/politech/contact/contact.html", content: "Contattaci al nostro indirizzo email" }
+        ];
+    
+        const searchInput = document.getElementById('searchInput');
+        const resultsList = document.getElementById('resultsList');
+    
+        searchInput.addEventListener('input', function() {
+            const query = searchInput.value.toLowerCase();
+            resultsList.innerHTML = ''; // Pulisci i risultati
+    
+            if (query) {
+                const filteredResults = sitePages.filter(page =>
+                    page.title.toLowerCase().includes(query) || 
+                    page.content.toLowerCase().includes(query)
+                );
+    
+                filteredResults.forEach(result => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `<a href="${result.url}">${result.title}</a> - ${result.content}`;
+                    li.addEventListener('click', function() {
+                        window.location.href = result.url; // Reindirizza quando si fa clic
+                    });
+                    resultsList.appendChild(li);
+                });
+    
+                resultsList.style.display = filteredResults.length > 0 ? 'block' : 'none'; // Mostra/nascondi il menu a tendina
+            } else {
+                resultsList.style.display = 'none'; // Nascondi se non c'è nulla
+            }
+        });
+    
+        // Chiudi i risultati quando si fa clic altrove
+        document.addEventListener('click', function(event) {
+            if (!searchInput.contains(event.target) && !resultsList.contains(event.target)) {
+                resultsList.style.display = 'none';
+            }
+        });
+    </script>
+
+    <!-- Menu laterale OK -->
+    <aside>
+        <ul>
+            <li>
+                <i class="fas fa-lock"></i>
+                <a href="/politech/basic/basic.html" style="text-decoration: none; color: inherit;"></a>
+                <span style="font-family: 'Montserrat', sans-serif" class="tooltip">Dashboard</span>
+            
+            </li>
+            <li>
+                <a href="/politech/asset/asset.html" style="text-decoration: none; color: inherit;">
+                <i class="fas fa-laptop"></i>
+                <span style="font-family: 'Montserrat', sans-serif" class="tooltip">Asset</span>
+                </a>
+            </li>
+            <li>
+                <a href="/politech/dipendenti/dipendenti.html" style="text-decoration: none; color: inherit;">
+                    <i class="fas fa-users"></i>
+                    <span style="font-family: 'Montserrat', sans-serif" class="tooltip">Dipendenti</span>
+                    </a>
+            </li>
+            <li>
+                <a href="/politech/licenze/licenze.html" style="text-decoration: none; color: inherit;">
+                    <i class="fas fa-file-alt"></i>
+                    <span style="font-family: 'Montserrat', sans-serif" class="tooltip">Licenze</span>
+                </a>
+            </li>
+            <li>
+                <a href="/politech/accessori/accessori.html" style="text-decoration: none; color: inherit;">
+                    <i class="fas fa-plug"></i>
+                    <span style="font-family: 'Montserrat', sans-serif" class="tooltip">Accessori</span>
+                    </a>
+            </li>
+            <li>
+                <a href="/politech/sedi/sedi.html" style="text-decoration: none; color: inherit;">
+                    <i class="fas fa-building"></i>
+                    <span style="font-family: 'Montserrat', sans-serif" class="tooltip">Sedi</span>
+                </a>
+            </li>
+            <li>
+                <a href="/politech/supporto/supporto.html" style="text-decoration: none; color: inherit;">
+                    <i class="fas fa-tools"></i> <!-- Nuova icona: attrezzi -->
+                    <span style="font-family: 'Montserrat', sans-serif" class="tooltip">Supporto</span>
+                </a>
+            </li>
+            
+        </ul>
+    </aside>
+
+    <!--Grafica OK-->
+    <style>
+        .search-results {
+            position: absolute; /* Posizionamento assoluto rispetto alla barra di ricerca */
+                top: 100%; /* Posiziona sotto l'input */
+                left: 50%;
+                transform: translateX(-50%);
+                right: 0;
+                width: 200px;
+                background: white;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                z-index: 10;
+                display: none; /* Nascondi i risultati di default */
+                max-height: 150px; /* Limita l'altezza massima del menu */
+                overflow-y: auto; /* Aggiungi lo scrolling se necessario */
+        }
+    
+        .search-results li {
+                padding: 8px; /* Riduci il padding per una dimensione più piccola */
+                cursor: pointer;
+                font-size: 14px; /* Riduci la dimensione del font */
+            }
+    
+        .search-results li:hover {
+            background-color: #f0f0f0;
+        }
+    </style>
+
+    <!--Filtri e tabella -->
+    <main>
+        <!-- Filtri per gli accessori -->
+        <div class="filters">
+            <label for="priceSort">Costo:</label>
+            <select id="priceSort">
+                <option value="">Nessun ordinamento</option>
+                <option value="asc">Crescente</option>
+                <option value="desc">Decrescente</option>
+            </select>
+
+            <label for="categoryFilter">Categoria:</label>
+            <select id="categoryFilter">
+                <option value="">Tutte</option>
+                <!-- Le categorie saranno popolate dinamicamente -->
+            </select>
+
+            <label for="searchFilter">Cerca (Nome/Seriale):</label>
+            <input type="text" id="searchFilter" placeholder="Cerca per nome o seriale">
+
+            <button onclick="applyFilters()">Filtra</button>
+        </div>
+        <!-- Tabella degli accessori -->
+        <table id="accessoriesTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Seriale</th>
+                    <th>Categoria</th>
+                    <th>Modello</th>
+                    <th>Costo</th>
+                    <th>Azioni</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Le righe saranno aggiunte dinamicamente -->
+            </tbody>
+        </table>
+    
+        <button onclick="addAccessories()" class="add-btn">Aggiungi Accessorio</button>
+         <h1 class="centered-title">Numero di accessori per categoria</h1>
+
+        <div class="chart-container">
+           
+            <canvas id="accessoryChart"></canvas>
+        </div>
+    </main>
+        <style>
+        .chart-container {
+            display: flex; /* Usa flexbox per centrare gli elementi */
+            justify-content: center; /* Centra orizzontalmente */
+            align-items: center; /* Centra verticalmente */
+            height: 100vh; /* Imposta l'altezza del contenitore al 80% della finestra */
+            width: 100%; 
+            margin: 20px auto; /* Centra il contenitore nella pagina */
+            margin-top: 20px; /* Distanza sopra il grafico */
+            margin-bottom: 10px; /* Distanza sotto il grafico */
+        }
+        
+        #accessoryChart {
+            width:90% !important; /* Il grafico deve occupare tutta la larghezza del contenitore */
+            height: 100% !important; /* Imposta un'altezza più alta per il grafico */
+            margin: 0 auto; /* Centra il grafico orizzontalmente */
+        }
+        </style>
+        <style>
+            .centered-title {
+                text-align: center; /* Centra il testo orizzontalmente */
+            }
+            </style>
+        
+    <!--Stile tabella-->
+    <style>
+        body {
+            position: relative;
+           font-family: 'Montserrat', Tahoma, Geneva, Verdana, sans-serif;
+           margin: 0px;
+           background-color: #f1f1f1;
+           color: #333;
+           line-height: 1.6;
+       }
+           /* Stile per la tabella */
+           table {
+               width: 100%;
+               border-collapse: collapse;
+               margin-top: 30px;
+               margin-bottom: 30px;
+               border-radius: 8px;
+               overflow: hidden;
+               box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Aggiungi ombra alla tabella */
+           }
+       
+           table th, table td {
+               padding: 15px;
+               text-align: left;
+               font-size: 16px;
+               transition: background-color 0.3s ease; /* Aggiungi effetto transizione */
+           }
+       
+           table th {
+               background-color: #4b0082; /* Viola più intenso */
+               color: white;
+               font-weight: 600;
+           }
+       
+           table tbody tr:nth-child(even) {
+               background-color: #f7f7f7; /* Colore alternato più delicato */
+           }
+       
+           table tbody tr:hover {
+               background-color: #ffffff; /* Hover viola chiaro */
+               transform: translateY(-2px); /* Effetto di sollevamento al passaggio del mouse */
+           }
+       
+           /* Contenitore per i filtri */
+           .filters {
+               margin-bottom: 30px;
+               padding: 20px;
+               background-color: #f9f9f9;
+               border: 1px solid #ddd;
+               border-radius: 8px;
+               box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Ombra leggera */
+           }
+       
+           .filters label {
+               margin-right: 15px;
+               font-weight: bold;
+               color: #555;
+           }
+       
+           .filters select, .filters input[type="text"] {
+               padding: 8px 12px;
+               font-size: 14px;
+               border: 1px solid #ccc;
+               border-radius: 5px;
+               background-color: #fff;
+               transition: border-color 0.3s ease;
+           }
+       
+           .filters select:focus, .filters input[type="text"]:focus {
+               border-color: #4b0082; /* Colore di focus */
+               outline: none;
+           }
+       
+           .filters button {
+               background-color: #4b0082;
+               color: white;
+               padding: 8px 20px;
+               font-size: 16px;
+               border: none;
+               border-radius: 5px;
+               cursor: pointer;
+               transition: background-color 0.3s ease;
+               box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombra leggera sul pulsante */
+           }
+       
+           .filters button:hover {
+               background-color: #6a0dad; /* Colore più scuro al passaggio del mouse */
+               transform: translateY(-2px); /* Effetto di sollevamento */
+           }
+       
+           /* Stile per i messaggi */
+           .message {
+               font-size: 18px;
+               color: #555;
+               padding: 10px;
+               border-radius: 5px;
+               margin-top: 20px;
+               background-color: #e0f7fa;
+               border: 1px solid #b2ebf2;
+           }
+       
+           /* Stile per le icone */
+           .icon {
+               margin-right: 10px;
+           }
+    
+     
+           .container {
+                       display: flex;
+                       justify-content: space-between;
+                       gap: 20px;
+                       margin-top: 30px;
+                   }
+           
+                   .chart-container {
+                       width: 48%;  /* Impostiamo una larghezza di 48% per ogni grafico */
+                       height: 400px;
+                       left: 50px; 
+                       padding: 20px;
+                   }
+           </style>  
+
+    <!--Grafica bottoni Aggiungi, Modifica, Elimina OK-->
+    <style>
+        /* Stile per il bottone Aggiungi Asset */
+    .add-btn {
+        background-color: #4b0082; /* Verde */
+        color: white;
+        padding: 10px 20px;
+        font-size: 16px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        margin-bottom: 30px; /* Spazio sotto il bottone */
+    }
+    
+    .add-btn:hover {
+        background-color: #7d6ddb; /* Verde più scuro */
+    }
+    
+    /* Stile per i bottoni Modifica ed Elimina */
+    .edit-btn, .delete-btn {
+        padding: 5px 15px;
+        font-size: 14px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    
+    /* Bottone Modifica */
+    .edit-btn {
+        background-color: #4b0082; /* Blu */
+        color: white;
+    }
+    
+    .edit-btn:hover {
+        background-color: #7d6ddb; /* Blu più scuro */
+    }
+    
+    /* Bottone Elimina */
+    .delete-btn {
+        background-color: #b70c00; /* Rosso */
+        color: white;
+    }
+    
+    .delete-btn:hover {
+        background-color: #f6392b; /* Rosso più scuro */
+    }
+    
+    </style>
+
+    <!--Gestione accessori Tutti-->
+    <script>
+        // Funzione per caricare gli accessori e popolari la tabella
+async function loadAccessories() {
+    try {
+        const response = await fetch('http://localhost:3000/api/accessori'); // Modifica questa URL con la tua rotta API
+        const data = await response.json();
+
+        const tableBody = document.querySelector('#accessoriesTable tbody');
+        tableBody.innerHTML = ''; // Pulisce la tabella prima di aggiungere nuove righe
+
+        // Aggiungi una riga per ogni accessorio
+        data.forEach(accessories => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${accessories.id_accessori}</td>
+                <td>${accessories.nome_accessori}</td>
+                <td>${accessories.seriale_accessori}</td>
+                <td>${accessories.categoria_accessori}</td>
+                <td>${accessories.modello_accessori}</td>
+                <td>${accessories.costo_accessori}</td>
+                <td>
+                    <button class="edit-btn" onclick="editaccessories(${accessories.id_accessori})">Modifica</button>
+                    <button class="delete-btn" onclick="deleteaccessories(${accessories.id_accessori})">Elimina</button>
+                </td>
+            `;
+            tableBody.appendChild(row);
+        });
+
+    } catch (error) {
+        console.error('Errore durante il recupero degli accessori:', error);
+    }
+}
+
+// Funzione per aggiungere un nuovo accessorio
+async function addAccessories() {
+    const nome = prompt('Inserisci il nome dell\'accessorio:');
+    if (!nome) return alert('Il nome dell\'accessorio è obbligatorio.');
+
+    const seriale = prompt('Inserisci il seriale dell\'accessorio:');
+    if (!seriale) return alert('Il seriale dell\'accessorio è obbligatorio.');
+
+    const categoria = prompt('Inserisci la categoria dell\'accessorio:');
+    if (!categoria) return alert('La categoria dell\'accessorio è obbligatoria.');
+
+    const modello = prompt('Inserisci il modello dell\'accessorio:');
+    if (!modello) return alert('Il modello dell\'accessorio è obbligatorio.');
+
+    const costo = parseFloat(prompt('Inserisci il costo dell\'accessorio (in euro):'));
+    if (isNaN(costo)) return alert('Il costo deve essere un numero valido.');
+
+    try {
+        const response = await fetch('http://localhost:3000/api/accessori', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ nome_accessori: nome, seriale_accessori: seriale, categoria_accessori: categoria, modello_accessori: modello, costo_accessori: costo })
+        });
+
+        if (response.ok) {
+            alert('Accessorio aggiunto con successo');
+            loadAccessories();  // Ricarica la lista degli accessori dopo l'aggiunta
+        } else {
+            alert('Errore durante l\'aggiunta dell\'accessorio');
+        }
+    } catch (error) {
+        console.error('Errore durante l\'aggiunta dell\'accessorio:', error);
+        alert('Si è verificato un errore. Riprova più tardi.');
+    }
+}
+
+// Aggiungi il pulsante per aggiungere un nuovo accessorio
+document.addEventListener('DOMContentLoaded', () => {
+    const addButton = document.createElement('button');
+    addButton.textContent = "Aggiungi Accessorio";
+    addButton.classList.add('add-btn');
+    addButton.onclick = addaccessories;
+    document.body.insertBefore(addButton, document.getElementById('accessoriesTable'));
+});
+
+
+// Funzione per modificare un accessorio
+async function editaccessories(id) {
+    const nome_accessori = prompt('Modifica il nome dell\'accessorio:');
+    const seriale_accessori = prompt('Modifica il seriale dell\'accessorio:');
+    const categoria_accessori = prompt('Modifica la categoria dell\'accessorio:');
+    const modello_accessori = prompt('Modifica il modello dell\'accessorio:');
+    const costo_accessori = parseFloat(prompt('Modifica il costo dell\'accessorio (in euro):'));
+
+    try {
+        const response = await fetch(`http://localhost:3000/api/accessori/${id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ nome_accessori, seriale_accessori, categoria_accessori, modello_accessori, costo_accessori })
+        });
+
+        if (response.ok) {
+            alert('Accessorio modificato con successo');
+            loadAccessories();  // Funzione per ricaricare la lista degli accessori
+        } else {
+            alert('Errore durante la modifica dell\'accessorio');
+        }
+    } catch (error) {
+        console.error('Errore durante la modifica dell\'accessorio:', error);
+    }
+}
+// Funzione per eliminare un accessorio
+async function deleteaccessories(id) {
+    try {
+        const confirmation = confirm(`Sei sicuro di voler eliminare l'accessorio con ID ${id}?`);
+        if (confirmation) {
+            const response = await fetch(`http://localhost:3000/api/accessori/${id}`, {
+                method: 'DELETE',
+            });
+            if (response.ok) {
+                alert(`Accessorio con ID ${id} eliminato.`);
+                loadAccessories(); // Ricarica la tabella dopo l'eliminazione
+            } else {
+                alert('Errore durante l\'eliminazione dell\'accessorio.');
+            }
+        }
+    } catch (error) {
+        console.error('Errore durante l\'eliminazione dell\'accessorio:', error);
+    }
+}
+
+// Carica gli accessori al caricamento della pagina
+window.onload = function() {
+    loadAccessories();
+};
+    </script>
+    
+   
+    
+    <!--Gestione accessori con filtri-->
+   <script>
+    // Funzione per caricare gli accessori con filtri
+async function loadAccessori(filters = {}) {
+    try {
+        let url = 'http://localhost:3000/api/accessori'; // URL del backend per gli accessori
+        const params = new URLSearchParams(filters).toString();
+        if (params) url += `?${params}`;
+        console.log("Fetching URL:", url);  // Log per vedere la URL
+
+        const response = await fetch(url);
+        const data = await response.json();
+        
+        // Ordinamento per prezzo
+        if (filters.priceSort) {
+            data.sort((a, b) => {
+                const priceA = parseFloat(a.costo_accessori);
+                const priceB = parseFloat(b.costo_accessori);
+
+                if (filters.priceSort === 'asc') {
+                    return priceA - priceB; // Crescente
+                } else {
+                    return priceB - priceA; // Decrescente
+                }
+            });
+        }
+
+        // Popolare la tabella degli accessori
+        const tableBody = document.querySelector("#accessoriesTable tbody");
+        tableBody.innerHTML = ""; // Reset della tabella
+
+        data.forEach(accessories => {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+                <td>${accessories.id_accessori}</td>
+                <td>${accessories.nome_accessori}</td>
+                <td>${accessories.seriale_accessori}</td>
+                <td>${accessories.categoria_accessori}</td>
+                <td>€${parseFloat(accessories.costo_accessori).toFixed(2)}</td>
+                <td>
+                    <button class="edit-btn" onclick="editaccessories(${accessories.id_accessori})">Modifica</button>
+                    <button class="delete-btn" onclick="deleteaccessories(${accessories.id_accessori})">Elimina</button>
+                </td>
+            `;
+            tableBody.appendChild(row);
+        });
+    } catch (error) {
+        console.error('Errore durante il caricamento degli accessori:', error);
+    }
+}
+    
+    // Applica i filtri per gli accessori
+function applyFilters() {
+    const priceSort = document.getElementById('priceSort').value;
+    const category = document.getElementById('categoryFilter').value;
+    const search = document.getElementById('searchFilter').value.toLowerCase();  // Trasformiamo la ricerca in minuscolo
+
+    const filters = {};
+    if (priceSort) filters.priceSort = priceSort;
+    if (category) filters.categoria_accessori = category;
+    if (search) filters.search = search;  // Aggiungi filtro per ricerca
+
+    loadAccessori(filters); // Ricarica la tabella con i filtri
+}
+
+// Funzione per caricare le categorie e popolare il filtro
+async function loadCategories() {
+    try {
+        const response = await fetch('http://localhost:3000/api/accessori/categories');
+        const categories = await response.json();
+
+        const categoryFilter = document.getElementById('categoryFilter');
+        categories.forEach(category => {
+            const option = document.createElement('option');
+            option.value = category;
+            option.textContent = category;
+            categoryFilter.appendChild(option);
+        });
+    } catch (error) {
+        console.error('Errore durante il caricamento delle categorie:', error);
+    }
+}
+
+// Carica le categorie all'avvio
+loadCategories();
+   </script>
+   <script>
+    const ctx = document.getElementById('accessoryChart').getContext('2d');
+
+// Recupera i dati dal server
+fetch('http://localhost:3000/api/accessori/categorie')
+    .then(response => response.json())
+    .then(data => {
+        // Prepara i dati per il grafico
+        const categorie = data.map(item => item.categoria_accessori || 'Non Specificato');
+        const numeri = data.map(item => item.numero_accessori);
+
+        // Crea il grafico
+        new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: categorie,
+                datasets: [{
+                    label: 'Numero di Accessori',
+                    data: numeri,
+                    backgroundColor: [
+    'rgba(204, 153, 255, 0.6)',  // Lilla chiaro
+    'rgba(221, 160, 221, 0.7)',  // Lavanda chiaro (Thistle)
+    'rgba(238, 130, 238, 0.6)',  // Orchidea chiaro (Violet)
+    'rgba(211, 178, 255, 0.6)',  // Lilla pallido (LavenderBlush)
+    'rgba(179, 143, 255, 0.5)',  // Viola chiaro (Mauve)
+    'rgba(216, 191, 216, 0.6)',  // Viola grigio chiaro (Thistle)
+    'rgba(255, 182, 193, 0.5)',  // Rosa chiaro (LightPink)
+    'rgba(221, 204, 255, 0.6)'   // Lavanda pallido (Lavender)
+],
+borderColor: [
+    'rgba(204, 153, 255, 1)',  // Lilla chiaro bordo
+    'rgba(221, 160, 221, 1)',  // Lavanda chiaro bordo (Thistle)
+    'rgba(238, 130, 238, 1)',  // Orchidea chiaro bordo (Violet)
+    'rgba(211, 178, 255, 1)',  // Lilla pallido bordo (LavenderBlush)
+    'rgba(179, 143, 255, 1)',  // Viola chiaro bordo (Mauve)
+    'rgba(216, 191, 216, 1)',  // Viola grigio chiaro bordo (Thistle)
+    'rgba(255, 182, 193, 1)',  // Rosa chiaro bordo (LightPink)
+    'rgba(221, 204, 255, 1)'   // Lavanda pallido bordo (Lavender)
+]
+,
+
+                }]
+            },
+            options: {
+                responsive: false, 
+                maintainAspectRatio: false, // Permette di adattarsi al contenitore
+                aspectRatio: 1, // Imposta il rapporto di aspetto (1:1 per un cerchio perfetto)
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                }
+            }
+        });
+    })
+    .catch(error => console.error('Errore nel recupero dei dati:', error));
+   </script>
+    
+    
+</html>
